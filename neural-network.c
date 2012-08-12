@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include <time.h>
 /****************************** BEGIN DECLS *******************************/
 struct neural_network_t {
@@ -9,8 +10,8 @@ struct neural_network_t {
 
   double* weights;
   size_t weights_size;
-  double weights_min;
-  double weights_max;
+  double min_weight;
+  double max_weight;
 };
 
 typedef struct neural_network_t neural_network_t;
@@ -22,14 +23,20 @@ construct_neural_network (const int*    config,
 neural_network_t*
 construct_neural_network_full (const int*   config,
                                const size_t config_size,
-                               const double weights_min,
-                               const double weights_max);
+                               const double min_weight,
+                               const double max_weight);
 
 void
 destruct_neural_network (neural_network_t* nn);
 
+void
+initialize_nguyen_widrow_weights (const neural_network_t* nn);
+
+void
+initialize_uniform_weights (const neural_network_t* nn);
+
 size_t
-set_weight (neural_network_t* nn,
+set_weight (const neural_network_t* nn,
             const size_t      row_index,
             const size_t      neuron_index_in_row,
             const size_t      neuron_index_in_next_row,
@@ -70,8 +77,8 @@ construct_neural_network (const int*    config,
 neural_network_t*
 construct_neural_network_full (const int*   config,
                                const size_t config_size,
-                               const double weights_min,
-                               const double weights_max)
+                               const double min_weight,
+                               const double max_weight)
 {
   // MALLOC: nn
   neural_network_t* nn = malloc(sizeof(neural_network_t));
@@ -92,34 +99,26 @@ construct_neural_network_full (const int*   config,
   // INIT: nn->weights_size
   nn->weights_size = 0;
 
-  // INIT: nn->weights_min
-  nn->weights_min = weights_min;
+  // INIT: nn->min_weight
+  nn->min_weight = min_weight;
 
-  // INIT: nn->weights_max
-  nn->weights_max = weights_max;
+  // INIT: nn->max_weight
+  nn->max_weight = max_weight;
 
   // MALLOC: nn->weights
   size_t i;
-  for (i = 0; i < nn->config_size - 1; ++i) {
+  for (i = 0; i < nn->config_size - 1; ++i)
+  {
     nn->weights_size += nn->config[i] * nn->config[i + 1];
   }
+
   nn->weights = malloc(sizeof(double) * nn->weights_size);
   if (nn->weights == NULL)
     return NULL;
 
   // INIT: nn->weights
-  srand((unsigned)time(NULL));
-  for (i = 0; i < nn->weights_size; ++i) {
-    nn->weights[i] = rand_double() * (nn->weights_max - nn->weights_min) + nn->weights_min ;
-  }
-  int j, k;
-  for (i = 0; i < nn->config_size - 1; ++i) {
-    for (j = 0; j < nn->config[i]; ++j) {
-      for (k = 0; k < nn->config[i + 1]; ++k) {
-        print_weight(nn, i, j, k);
-      }
-    }
-  }
+  initialize_nguyen_widrow_weights(nn);
+
   return nn;
 }
 
@@ -138,8 +137,36 @@ destruct_neural_network (neural_network_t* nn)
 }
 
 
+void
+initialize_nguyen_widrow_weights (const neural_network_t* nn)
+{
+  initialize_uniform_weights(nn);
+
+  size_t num_input = nn->config[0];
+  size_t num_hidden = 0;
+  int i;
+  for (i = 1; i < nn->config_size - 1; ++i) {
+    num_hidden += nn->config[i];
+  }
+  double beta = 0.7 * pow(num_hidden, 1.0/num_input);
+}
+
+
+void
+initialize_uniform_weights (const neural_network_t* nn)
+{
+  srand((unsigned)time(NULL));
+
+  int i;
+  for (i = 0; i < nn->weights_size; ++i)
+  {
+    nn->weights[i] = rand_double() * (nn->max_weight - nn->min_weight) + nn->min_weight ;
+  }
+}
+
+
 size_t
-set_weight (neural_network_t* nn,
+set_weight (const neural_network_t* nn,
             const size_t      row_index,
             const size_t      neuron_index_in_row,
             const size_t      neuron_index_in_next_row,
@@ -150,7 +177,6 @@ set_weight (neural_network_t* nn,
   return index;
 }
 
-
 size_t
 print_weight (const neural_network_t* nn,
               const size_t            row_index,
@@ -159,7 +185,7 @@ print_weight (const neural_network_t* nn,
 {
   size_t index = get_weight_index(nn, row_index, neuron_index_in_row, neuron_index_in_next_row);
   printf("%f\n",
-         nn->weights[retr]);
+         nn->weights[index]);
   return index;
 }
 

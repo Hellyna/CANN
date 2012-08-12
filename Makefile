@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -O0 -g -Wall
-LDFLAGS =
+LDFLAGS = -lm
 
 all: neural-network
 
