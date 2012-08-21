@@ -22,9 +22,20 @@ construct_training_set (const char* input_data_path,
   // MALLOC: ts
   training_set_t* ts = malloc(sizeof(training_set_t));
   exit_if_null(ts);
-/*
+
+  csv_data_t* input_data = construct_csv_data(input_data_path);
+  csv_data_t* output_data = construct_csv_data(output_data_path);
+
   // INIT: ts->training_set_size
-  ts->training_set_size = training_set_size;
+  ts->training_set_size = input_data->line_count;
+
+  int i, temp = input_data->entry_counts[0];
+  for (i = 1; i < ts->training_set_size; ++i)
+  {
+    if (temp != input_data->entry_counts[i])
+    {
+    }
+  }
 
   // INIT: ts->input_size
   ts->input_size = input_size;
@@ -41,7 +52,6 @@ construct_training_set (const char* input_data_path,
   ts->target_outputs = malloc(sizeof(double*) * ts->training_set_size);
   exit_if_null(ts->target_outputs);
 
-  int i;
   for (i = 0; i < ts->training_set_size; ++i)
   {
     ts->target_inputs[i] = malloc(sizeof(double) * ts->input_size);
@@ -52,7 +62,7 @@ construct_training_set (const char* input_data_path,
     exit_if_null(ts->target_outputs[i]);
     memcpy(ts->target_outputs[i], target_outputs[i], sizeof(double) * ts->output_size);
   }
-*/
+
   return ts;
 }
 
@@ -239,7 +249,6 @@ int main (int argc, char** argv)
   int config[] = {2,4,1};
   double target_inputs[4][2] = { {0, 0}, {0, 1}, {1, 0}, {1, 1}};
   double target_outputs[4][1] = { {0}, {1}, {1}, {0}};
-//  training_set_t* ts = construct_training_set(4, target_inputs, 2, target_outputs, 1);
   neural_network_t* nn = construct_neural_network(config, 3);
   print_weights(nn);
   destruct_neural_network(nn);

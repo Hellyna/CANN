@@ -40,7 +40,7 @@ read_entries (void* entry, size_t entry_length, void* csv_data)
 void
 csv_exit_if_error (csv_parser* parser)
 {
-  fprintf(stderr, "Error while parsing file: %s\n", csv_strerror(csv_error(parser)));
+  printferr("Error while parsing file: %s\n", csv_strerror(csv_error(parser)));
   exit(EXIT_FAILURE);
 }
 
@@ -110,8 +110,8 @@ construct_csv_data (const char* path)
     }
   }
 
+  fclose(fp);
   csv_free(&parser);
-
   return csvd;
 }
 

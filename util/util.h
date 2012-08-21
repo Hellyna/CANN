@@ -19,7 +19,14 @@ exit_if_null (void* p);
 void
 exit_if_not_zero (int n);
 
+int
+printferr (const char *format, ...);
 
+void
+printferr_and_exit (const char *format, ...);
+
+void
+printferr_and_exitno (int exit_value, const char *format, ...);
 #endif /* UTIL_H */
 
 
