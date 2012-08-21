@@ -1,52 +1,81 @@
+//#define NDEBUG
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
-/****************************** BEGIN DECLS *******************************/
-struct neural_network_t {
-  int* config;
-  size_t config_size;
 
-  double*** weights;
-  double min_weight;
-  double max_weight;
-};
+#include "util/util.h"
+#include "neural-network.h"
 
-typedef struct neural_network_t neural_network_t;
+static const double rPROPInitialUpdate = 0.1;
+static const double rPROPDeltaMax = 50;
+static const double rPROPDeltaMin = 1e-6;
+static const double rPROPChangeIfNegative = 0.5;
+static const double rPROPChangeIfPositive = 1.2;
+static const double rPROPZeroTolerance = 0.00000000000000001;
 
-neural_network_t*
-construct_neural_network (const int*    config,
-                          const size_t  config_size);
+training_set_t*
+construct_training_set (const char* input_data_path,
+                        const char* output_data_path)
+{
+  // MALLOC: ts
+  training_set_t* ts = malloc(sizeof(training_set_t));
+  exit_if_null(ts);
+/*
+  // INIT: ts->training_set_size
+  ts->training_set_size = training_set_size;
 
-neural_network_t*
-construct_neural_network_full (const int*   config,
-                               const size_t config_size,
-                               const double min_weight,
-                               const double max_weight);
+  // INIT: ts->input_size
+  ts->input_size = input_size;
+
+  // INIT: ts->output_size
+  ts->output_size = output_size;
+
+  // MALLOC: ts->target_inputs
+  // INIT: ts->target_inputs
+  // MALLOC: ts->target_outputs
+  // INIT: ts->target_outputs
+  ts->target_inputs = malloc(sizeof(double*) * ts->training_set_size);
+  exit_if_null(ts->target_inputs);
+  ts->target_outputs = malloc(sizeof(double*) * ts->training_set_size);
+  exit_if_null(ts->target_outputs);
+
+  int i;
+  for (i = 0; i < ts->training_set_size; ++i)
+  {
+    ts->target_inputs[i] = malloc(sizeof(double) * ts->input_size);
+    exit_if_null(ts->target_inputs[i]);
+    memcpy(ts->target_inputs[i], target_inputs[i], sizeof(double) * ts->input_size);
+
+    ts->target_outputs[i] = malloc(sizeof(double) * ts->output_size);
+    exit_if_null(ts->target_outputs[i]);
+    memcpy(ts->target_outputs[i], target_outputs[i], sizeof(double) * ts->output_size);
+  }
+*/
+  return ts;
+}
+
 
 void
-destruct_neural_network (neural_network_t* nn);
+destruct_training_set (training_set_t* ts)
+{
+  // FREE: ts->target_inputs
+  // FREE: ts->target_outputs
+  int i;
+  for (i = 0; i < ts->training_set_size; ++i)
+  {
+    free(ts->target_inputs[i]);
+    free(ts->target_outputs[i]);
+  }
+  free(ts->target_inputs);
+  free(ts->target_outputs);
 
-void
-initialize_nguyen_widrow_weights (const neural_network_t* nn);
-
-void
-initialize_uniform_weights (const neural_network_t* nn);
-
-void
-print_weights (const neural_network_t* nn);
-
-double
-rand_double();
-
-void
-exit_if_null (void* p);
-
-/***************************** END DECLS ********************************/
+  // FREE: ts
+  free(ts);
+}
 
 
-/***************************** BEGIN IMPL *******************************/
 neural_network_t*
 construct_neural_network (const int*    config,
                           const size_t  config_size)
@@ -197,7 +226,7 @@ print_weights (const neural_network_t* nn) {
     {
       for(k = 0; k < nn->config[i + 1]; ++k)
       {
-        printf("%f ", nn->weights[i][j][k]);
+        printf("%g ", nn->weights[i][j][k]);
       }
         printf("\n");
     }
@@ -205,30 +234,12 @@ print_weights (const neural_network_t* nn) {
   }
 }
 
-
-double
-rand_double()
-{
-  return ((double)rand()/(double)RAND_MAX);
-}
-
-
-void
-exit_if_null (void* p)
-{
-  if (p == NULL)
-  {
-    perror("Error");
-    exit(-1);
-  }
-}
-
-/***************************** END IMPL *********************************/
-
-
 int main (int argc, char** argv)
 {
   int config[] = {2,4,1};
+  double target_inputs[4][2] = { {0, 0}, {0, 1}, {1, 0}, {1, 1}};
+  double target_outputs[4][1] = { {0}, {1}, {1}, {0}};
+//  training_set_t* ts = construct_training_set(4, target_inputs, 2, target_outputs, 1);
   neural_network_t* nn = construct_neural_network(config, 3);
   print_weights(nn);
   destruct_neural_network(nn);
