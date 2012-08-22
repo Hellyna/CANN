@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "util/util.h"
+#include "libcsv/csv.h"
 #include "neural-network.h"
 
 static const double rPROPInitialUpdate = 0.1;
@@ -26,22 +27,40 @@ construct_training_set (const char* input_data_path,
   csv_data_t* input_data = construct_csv_data(input_data_path);
   csv_data_t* output_data = construct_csv_data(output_data_path);
 
+  // VALIDATE: training_set_size
+  if (input_data->line_count != output_data->line_count)
+  {
+    printferr_and_exit("Input and output data file entries are not equal.\n");
+  }
+
   // INIT: ts->training_set_size
   ts->training_set_size = input_data->line_count;
 
+  // VALIDATE: ts->input_size
   int i, temp = input_data->entry_counts[0];
   for (i = 1; i < ts->training_set_size; ++i)
   {
     if (temp != input_data->entry_counts[i])
     {
+      printferr_and_exit("Malformed input data file.\n");
     }
   }
 
   // INIT: ts->input_size
-  ts->input_size = input_size;
+  ts->input_size = temp;
+
+  // VALIDATE: ts->output_size
+  temp = output_data->entry_counts[0];
+  for (i = 1; i < ts->training_set_size; ++i)
+  {
+    if (temp != output_data->entry_counts[i])
+    {
+      printferr_and_exit("Malformed output data file.\n");
+    }
+  }
 
   // INIT: ts->output_size
-  ts->output_size = output_size;
+  ts->output_size = temp;
 
   // MALLOC: ts->target_inputs
   // INIT: ts->target_inputs

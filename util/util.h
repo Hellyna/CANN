@@ -10,22 +10,22 @@
 
 #define free_and_null(p)   do { free(p); (p) = NULL; } while(0)
 
-double
+inline double
 rand_double();
 
-void
+inline void
 exit_if_null (void* p);
 
-void
+inline void
 exit_if_not_zero (int n);
 
-int
+inline int
 printferr (const char *format, ...);
 
-void
+inline void
 printferr_and_exit (const char *format, ...);
 
-void
+inline void
 printferr_and_exitno (int exit_value, const char *format, ...);
 #endif /* UTIL_H */
 
