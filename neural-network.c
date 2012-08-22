@@ -34,7 +34,7 @@ construct_training_set (const char* input_data_path,
   }
 
   // INIT: ts->training_set_size
-  ts->training_set_size = input_data->line_count;
+  ts->training_set_size = input_data->line_count - 1;
 
   // VALIDATE: ts->input_size
   int i, temp = input_data->entry_counts[0];
@@ -44,6 +44,7 @@ construct_training_set (const char* input_data_path,
     {
       printferr_and_exit("Malformed input data file.\n");
     }
+    temp = input_data->entry_counts[i];
   }
 
   // INIT: ts->input_size
@@ -57,6 +58,7 @@ construct_training_set (const char* input_data_path,
     {
       printferr_and_exit("Malformed output data file.\n");
     }
+    temp = output_data->entry_counts[i];
   }
 
   // INIT: ts->output_size
@@ -71,17 +73,26 @@ construct_training_set (const char* input_data_path,
   ts->target_outputs = malloc(sizeof(double*) * ts->training_set_size);
   exit_if_null(ts->target_outputs);
 
+  int j;
   for (i = 0; i < ts->training_set_size; ++i)
   {
-    ts->target_inputs[i] = malloc(sizeof(double) * ts->input_size);
+    ts->target_inputs[i] = calloc(ts->input_size, sizeof(double));
     exit_if_null(ts->target_inputs[i]);
-    memcpy(ts->target_inputs[i], target_inputs[i], sizeof(double) * ts->input_size);
+    for (j = 0; j < ts->input_size; ++j)
+    {
+      ts->target_inputs[i][j] = atof(input_data->data[i + 1][j]);
+    }
 
-    ts->target_outputs[i] = malloc(sizeof(double) * ts->output_size);
+    ts->target_outputs[i] = calloc(ts->output_size, sizeof(double));
     exit_if_null(ts->target_outputs[i]);
-    memcpy(ts->target_outputs[i], target_outputs[i], sizeof(double) * ts->output_size);
+    for (j = 0; j < ts->output_size; ++j)
+    {
+      ts->target_outputs[i][j] = atof(output_data->data[i + 1][j]);
+    }
   }
 
+  destruct_csv_data(input_data);
+  destruct_csv_data(output_data);
   return ts;
 }
 
@@ -266,9 +277,9 @@ print_weights (const neural_network_t* nn) {
 int main (int argc, char** argv)
 {
   int config[] = {2,4,1};
-  double target_inputs[4][2] = { {0, 0}, {0, 1}, {1, 0}, {1, 1}};
-  double target_outputs[4][1] = { {0}, {1}, {1}, {0}};
   neural_network_t* nn = construct_neural_network(config, 3);
+  training_set_t* ts = construct_training_set("xor.in", "xor.out");
+  destruct_training_set(ts);
   print_weights(nn);
   destruct_neural_network(nn);
   return 0;

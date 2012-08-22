@@ -31,9 +31,9 @@ void
 read_entries (void* entry, size_t entry_length, void* csv_data)
 {
   csv_data_t* csvd = (csv_data_t*) csv_data;
-  csvd->data[line_index][entry_index] = malloc(sizeof(char) * entry_length);
+  csvd->data[line_index][entry_index] = malloc(sizeof(char) * entry_length + 1);
   exit_if_null(csvd->data[line_index][entry_index]);
-  memcpy(csvd->data[line_index][entry_index], entry, sizeof(char) * entry_length);
+  memcpy(csvd->data[line_index][entry_index], entry, sizeof(char) * entry_length + 1);
   ++entry_index;
 }
 
