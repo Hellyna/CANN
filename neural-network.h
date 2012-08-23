@@ -16,6 +16,8 @@ struct neural_network_t {
   double*** weights;
   double    min_weight;
   double    max_weight;
+
+  double** feed_forwards;
 };
 
 typedef struct training_set_t   training_set_t;

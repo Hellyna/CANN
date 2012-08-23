@@ -8,24 +8,32 @@
 #define SIZEOF_PTR 8
 #endif
 
-#define free_and_null(p)   do { free(p); (p) = NULL; } while(0)
-
-inline double
+double
 rand_double();
 
-inline void
+void*
+malloc_exit_if_null(const size_t size);
+
+void*
+calloc_exit_if_null(const size_t num,
+                    const size_t size);
+
+void
+free_and_null (void* p);
+
+void
 exit_if_null (void* p);
 
-inline void
+void
 exit_if_not_zero (int n);
 
-inline int
+int
 printferr (const char *format, ...);
 
-inline void
+void
 printferr_and_exit (const char *format, ...);
 
-inline void
+void
 printferr_and_exitno (int exit_value, const char *format, ...);
 #endif /* UTIL_H */
 

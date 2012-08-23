@@ -1,6 +1,7 @@
 //#define NDEBUG
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
@@ -21,8 +22,7 @@ construct_training_set (const char* input_data_path,
                         const char* output_data_path)
 {
   // MALLOC: ts
-  training_set_t* ts = malloc(sizeof(training_set_t));
-  exit_if_null(ts);
+  training_set_t* ts = malloc_exit_if_null(sizeof(training_set_t));
 
   csv_data_t* input_data = construct_csv_data(input_data_path);
   csv_data_t* output_data = construct_csv_data(output_data_path);
@@ -68,23 +68,19 @@ construct_training_set (const char* input_data_path,
   // INIT: ts->target_inputs
   // MALLOC: ts->target_outputs
   // INIT: ts->target_outputs
-  ts->target_inputs = malloc(sizeof(double*) * ts->training_set_size);
-  exit_if_null(ts->target_inputs);
-  ts->target_outputs = malloc(sizeof(double*) * ts->training_set_size);
-  exit_if_null(ts->target_outputs);
+  ts->target_inputs = malloc_exit_if_null(sizeof(double*) * ts->training_set_size);
+  ts->target_outputs = malloc_exit_if_null(sizeof(double*) * ts->training_set_size);
 
   int j;
   for (i = 0; i < ts->training_set_size; ++i)
   {
-    ts->target_inputs[i] = calloc(ts->input_size, sizeof(double));
-    exit_if_null(ts->target_inputs[i]);
+    ts->target_inputs[i] = calloc_exit_if_null(ts->input_size, sizeof(double));
     for (j = 0; j < ts->input_size; ++j)
     {
       ts->target_inputs[i][j] = atof(input_data->data[i + 1][j]);
     }
 
-    ts->target_outputs[i] = calloc(ts->output_size, sizeof(double));
-    exit_if_null(ts->target_outputs[i]);
+    ts->target_outputs[i] = calloc_exit_if_null(ts->output_size, sizeof(double));
     for (j = 0; j < ts->output_size; ++j)
     {
       ts->target_outputs[i][j] = atof(output_data->data[i + 1][j]);
@@ -105,18 +101,18 @@ destruct_training_set (training_set_t* ts)
   int i;
   for (i = 0; i < ts->training_set_size; ++i)
   {
-    free(ts->target_inputs[i]);
-    free(ts->target_outputs[i]);
+    free_and_null(ts->target_inputs[i]);
+    free_and_null(ts->target_outputs[i]);
   }
-  free(ts->target_inputs);
-  free(ts->target_outputs);
+  free_and_null(ts->target_inputs);
+  free_and_null(ts->target_outputs);
 
   // FREE: ts
-  free(ts);
+  free_and_null(ts);
 }
 
 
-neural_network_t*
+inline neural_network_t*
 construct_neural_network (const int*    config,
                           const size_t  config_size)
 {
@@ -131,15 +127,13 @@ construct_neural_network_full (const int*   config,
                                const double max_weight)
 {
   // MALLOC: nn
-  neural_network_t* nn = malloc(sizeof(neural_network_t));
-  exit_if_null(nn);
+  neural_network_t* nn = malloc_exit_if_null(sizeof(neural_network_t));
 
   // INIT: nn->config_size
   nn->config_size = config_size;
 
   // MALLOC: nn->config
-  nn->config = malloc(sizeof(int) * config_size);
-  exit_if_null(nn->config);
+  nn->config = malloc_exit_if_null(sizeof(int) * config_size);
 
   // INIT: nn->config
   memcpy(nn->config, config, sizeof(int) * config_size);
@@ -151,24 +145,27 @@ construct_neural_network_full (const int*   config,
   nn->max_weight = max_weight;
 
   // MALLOC: nn->weights
-  nn->weights = malloc(sizeof(double**) * nn->config_size - 1);
-  exit_if_null(nn->weights);
+  nn->weights = malloc_exit_if_null((nn->config_size - 1) * SIZEOF_PTR);
 
   size_t i, j;
   for (i = 0; i < nn->config_size - 1; ++i)
     {
-    nn->weights[i] = malloc(sizeof(double*) * nn->config[i]);
-    exit_if_null(nn->weights[i]);
+    nn->weights[i] = malloc_exit_if_null(nn->config[i] * SIZEOF_PTR);
     for (j = 0; j < nn->config[i]; ++j)
     {
-      nn->weights[i][j] = malloc(sizeof(double) * nn->config[i + 1]);
-      exit_if_null(nn->weights[i][j]);
+      nn->weights[i][j] = malloc_exit_if_null(sizeof(double) * nn->config[i + 1]);
     }
   }
+
   // INIT: nn->weights
   initialize_nguyen_widrow_weights(nn);
-  //initialize_uniform_weights(nn);
 
+  // MALLOC: nn->feed_forwards
+  nn->feed_forwards = malloc_exit_if_null(nn->config_size * SIZEOF_PTR);
+  for (i = 0; i < nn->config_size; ++i)
+  {
+    nn->feed_forwards[i] = malloc_exit_if_null(nn->config[i] * sizeof(double));
+  }
   return nn;
 }
 
@@ -176,28 +173,30 @@ construct_neural_network_full (const int*   config,
 void
 destruct_neural_network (neural_network_t* nn)
 {
-  // FREE: weights
+  // FREE: nn->weights
   size_t i, j;
   for (i = 0; i < nn->config_size - 1; ++i)
   {
     for (j = 0; j < nn->config[i]; ++j)
     {
-      free(nn->weights[i][j]);
-      nn->weights[i][j] = NULL;
+      free_and_null(nn->weights[i][j]);
     }
-    free(nn->weights[i]);
-    nn->weights[i] = NULL;
+    free_and_null(nn->weights[i]);
   }
-  free(nn->weights);
-  nn->weights = NULL;
+  free_and_null(nn->weights);
+
+  // FREE: nn->feed_forwards
+  for (i = 0; i < nn->config_size; ++i)
+  {
+    free_and_null(nn->feed_forwards[i]);
+  }
+  free_and_null(nn->feed_forwards);
 
   // FREE: config
-  free(nn->config);
-  nn->config = NULL;
+  free_and_null(nn->config);
 
   // FREE: nn
-  free(nn);
-  nn = NULL;
+  free_and_null(nn);
 }
 
 
@@ -238,7 +237,7 @@ initialize_nguyen_widrow_weights (const neural_network_t* nn)
 }
 
 
-void
+inline void
 initialize_uniform_weights (const neural_network_t* nn)
 {
   srand((unsigned)time(NULL));
@@ -257,7 +256,7 @@ initialize_uniform_weights (const neural_network_t* nn)
 }
 
 
-void
+inline void
 print_weights (const neural_network_t* nn) {
   size_t i, j, k;
   for (i = 0; i < nn->config_size - 1; ++i)
@@ -273,6 +272,74 @@ print_weights (const neural_network_t* nn) {
       printf("\n");
   }
 }
+
+inline double
+elliott (double x, double s, bool is_symmetric)
+{
+  return (is_symmetric) ? ((x * s) / (1.0 + fabs(x * s)))
+                        : ((0.5 * (x * s) / (1.0 + fabs(x * s))) + 0.5);
+}
+
+inline void
+feed_forward (const neural_network_t* nn,
+              const training_set_t*   ts,
+              const size_t            training_set_index)
+{
+  static int i, j, k;
+  static double sum;
+  for (i = 0; i < nn->config[0]; ++i)
+  {
+    nn->feed_forwards[0][i] = ts->target_inputs[training_set_index][i];
+  }
+
+  for (i = 1; i < nn->config_size; ++i)
+  {
+    for (j = 0; j < nn->config[i]; ++j)
+    {
+      sum = 0.0;
+      for (k = 0; k < nn->config[i - 1]; ++k)
+      {
+        sum += nn->feed_forwards[i - 1][k] * nn->weights[i - 1][k][j];
+      }
+      nn->feed_forwards[i][j] = elliott(sum, 1.0, false);
+    }
+  }
+}
+
+inline double
+resilient_propagate (const neural_network_t*  nn,
+                     const training_set_t*    ts,
+                     const size_t             training_set_index)
+{
+  return 0.0;
+}
+
+void
+train (neural_network_t*  nn,
+       training_set_t*    ts,
+       double             threshold_error)
+{
+  double maximum_error = 999999;
+  double current_error;
+  bool looping = true;
+  size_t training_set_index = 0;
+  size_t training_set_size = ts->training_set_size;
+  while (looping)
+  {
+    if (training_set_index >= training_set_size - 1)
+    {
+      training_set_index = 0;
+    }
+    feed_forward(nn, ts, training_set_index);
+    current_error = resilient_propagate(nn, ts, training_set_index);
+    looping = current_error > maximum_error;
+    if (looping)
+    {
+      maximum_error = current_error;
+    }
+  }
+}
+
 
 int main (int argc, char** argv)
 {

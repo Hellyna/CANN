@@ -31,8 +31,7 @@ void
 read_entries (void* entry, size_t entry_length, void* csv_data)
 {
   csv_data_t* csvd = (csv_data_t*) csv_data;
-  csvd->data[line_index][entry_index] = malloc(sizeof(char) * entry_length + 1);
-  exit_if_null(csvd->data[line_index][entry_index]);
+  csvd->data[line_index][entry_index] = malloc_exit_if_null(sizeof(char) * entry_length + 1);
   memcpy(csvd->data[line_index][entry_index], entry, sizeof(char) * entry_length + 1);
   ++entry_index;
 }
@@ -57,8 +56,7 @@ construct_csv_data (const char* path)
   exit_if_not_zero(csv_init(&parser, CSV_STRICT | CSV_APPEND_NULL));
 
   // MALLOC: csvd
-  csv_data_t* csvd = malloc(sizeof(csv_data_t));
-  exit_if_null(csvd);
+  csv_data_t* csvd = malloc_exit_if_null(sizeof(csv_data_t));
 
   // Count csv file lines
   csvd->line_count = 0;
@@ -70,12 +68,10 @@ construct_csv_data (const char* path)
   }
 
   // MALLOC: csvd->entry_counts
-  csvd->entry_counts = calloc(csvd->line_count, sizeof(size_t));
-  exit_if_null(csvd->entry_counts);
+  csvd->entry_counts = calloc_exit_if_null(csvd->line_count, sizeof(size_t));
 
   // MALLOC: csvd->data (lines)
-  csvd->data = malloc(SIZEOF_PTR * csvd->line_count);
-  exit_if_null(csvd->data);
+  csvd->data = malloc_exit_if_null(SIZEOF_PTR * csvd->line_count);
 
   // Count csv file entries in each line
   csv_fini(&parser, NULL, NULL, csvd);
@@ -93,8 +89,7 @@ construct_csv_data (const char* path)
   int i;
   for (i = 0; i < csvd->line_count; ++i)
   {
-    csvd->data[i] = malloc(SIZEOF_PTR * csvd->entry_counts[i]);
-    exit_if_null(csvd->data[i]);
+    csvd->data[i] = malloc_exit_if_null(SIZEOF_PTR * csvd->entry_counts[i]);
   }
 
   // Read each entry into data, including mallocing the associated space.
