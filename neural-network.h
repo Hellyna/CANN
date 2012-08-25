@@ -17,7 +17,8 @@ struct neural_network_t {
   double    min_weight;
   double    max_weight;
 
-  double** feed_forwards;
+  double**  feed_forwards;
+  double**  layer_outputs;
 };
 
 typedef struct training_set_t   training_set_t;
@@ -38,7 +39,8 @@ neural_network_t*
 construct_neural_network_full (const int*   config,
                                const size_t config_size,
                                const double min_weight,
-                               const double max_weight);
+                               const double max_weight,
+                               void  (*initialize_weights) (const neural_network_t*));
 
 void
 destruct_neural_network (neural_network_t* nn);

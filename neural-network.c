@@ -1,8 +1,9 @@
 //#define NDEBUG
-#include <stdlib.h>
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <float.h>
 #include <math.h>
 #include <time.h>
 
@@ -116,7 +117,7 @@ inline neural_network_t*
 construct_neural_network (const int*    config,
                           const size_t  config_size)
 {
-  return construct_neural_network_full(config, config_size, -1.0, 1.0);
+  return construct_neural_network_full(config, config_size, -1.0, 1.0, &initialize_nguyen_widrow_weights);
 }
 
 
@@ -124,7 +125,8 @@ neural_network_t*
 construct_neural_network_full (const int*   config,
                                const size_t config_size,
                                const double min_weight,
-                               const double max_weight)
+                               const double max_weight,
+                               void  (*initialize_weights) (const neural_network_t*))
 {
   // MALLOC: nn
   neural_network_t* nn = malloc_exit_if_null(sizeof(neural_network_t));
@@ -158,7 +160,7 @@ construct_neural_network_full (const int*   config,
   }
 
   // INIT: nn->weights
-  initialize_nguyen_widrow_weights(nn);
+  (*initialize_weights) (nn);
 
   // MALLOC: nn->feed_forwards
   nn->feed_forwards = malloc_exit_if_null(nn->config_size * SIZEOF_PTR);
@@ -166,6 +168,14 @@ construct_neural_network_full (const int*   config,
   {
     nn->feed_forwards[i] = malloc_exit_if_null(nn->config[i] * sizeof(double));
   }
+
+  // MALLOC: nn->layer_outputs
+  nn->layer_outputs = malloc_exit_if_null((nn->config_size - 1) * SIZEOF_PTR);
+  for (i = 1; i < nn->config_size; ++i)
+  {
+    nn->layer_outputs[i - 1] = malloc_exit_if_null(nn->config[i] * sizeof(double));
+  }
+
   return nn;
 }
 
@@ -191,6 +201,13 @@ destruct_neural_network (neural_network_t* nn)
     free_and_null(nn->feed_forwards[i]);
   }
   free_and_null(nn->feed_forwards);
+
+  // FREE: nn->layer_outputs
+  for (i = 1; i < nn->config_size; ++i)
+  {
+    free_and_null(nn->layer_outputs[i - 1]);
+  }
+  free_and_null(nn->layer_outputs);
 
   // FREE: config
   free_and_null(nn->config);
@@ -274,10 +291,24 @@ print_weights (const neural_network_t* nn) {
 }
 
 inline double
-elliott (double x, double s, bool is_symmetric)
+elliott (const double x,
+         const double slope,
+         const bool is_symmetric)
 {
-  return (is_symmetric) ? ((x * s) / (1.0 + fabs(x * s)))
-                        : ((0.5 * (x * s) / (1.0 + fabs(x * s))) + 0.5);
+  double temp = x * slope;
+  return (is_symmetric) ? ((temp) / (1.0 + fabs(temp)))
+                        : ((0.5 * (temp) / (1.0 + fabs(temp))) + 0.5);
+}
+
+inline double
+elliott_derivative (const double b,
+                    const double a,
+                    const double slope,
+                    const bool is_symmetric)
+{
+  double temp = b * slope;
+  return (is_symmetric) ? slope / ((1.0 + fabs(temp)) * (1.0 + fabs(temp)))
+                        : slope / (2.0 * (1.0 + fabs(temp)) * (1.0 + fabs(temp)));
 }
 
 inline void
@@ -301,6 +332,7 @@ feed_forward (const neural_network_t* nn,
       {
         sum += nn->feed_forwards[i - 1][k] * nn->weights[i - 1][k][j];
       }
+      nn->layer_outputs[i - 1][j] = sum;
       nn->feed_forwards[i][j] = elliott(sum, 1.0, false);
     }
   }
@@ -319,7 +351,7 @@ train (neural_network_t*  nn,
        training_set_t*    ts,
        double             threshold_error)
 {
-  double maximum_error = 999999;
+  double maximum_error = DBL_MAX;
   double current_error;
   bool looping = true;
   size_t training_set_index = 0;
