@@ -18,7 +18,8 @@ struct neural_network_t {
   double    max_weight;
 
   double**  feed_forwards;
-  double**  layer_outputs;
+  double**  layer_sums;
+  double**  layer_deltas;
 };
 
 typedef struct training_set_t   training_set_t;
@@ -52,6 +53,22 @@ void
 initialize_uniform_weights (const neural_network_t* nn);
 
 void
-print_weights (const neural_network_t* nn);
+train_neural_network (const neural_network_t* nn,
+                      const training_set_t*   ts,
+                      const double            threshold_error);
+void
+train_neural_network_full (const neural_network_t*  nn,
+                           const training_set_t*    ts,
+                           double                   threshold_error,
+                           double                   (*error_function) (const double,
+                                                                       const double));
+
+double
+linear_error (const double target_value,
+              const double trained_value);
+
+double
+tanh_error (const double target_value,
+            const double trained_value);
 
 #endif /* NEURAL_NETWORK_H */

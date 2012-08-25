@@ -169,11 +169,18 @@ construct_neural_network_full (const int*   config,
     nn->feed_forwards[i] = malloc_exit_if_null(nn->config[i] * sizeof(double));
   }
 
-  // MALLOC: nn->layer_outputs
-  nn->layer_outputs = malloc_exit_if_null((nn->config_size - 1) * SIZEOF_PTR);
+  // MALLOC: nn->layer_sums
+  nn->layer_sums = malloc_exit_if_null((nn->config_size - 1) * SIZEOF_PTR);
   for (i = 1; i < nn->config_size; ++i)
   {
-    nn->layer_outputs[i - 1] = malloc_exit_if_null(nn->config[i] * sizeof(double));
+    nn->layer_sums[i - 1] = malloc_exit_if_null(nn->config[i] * sizeof(double));
+  }
+
+  // MALLOC: nn->layer_deltas
+  nn->layer_deltas = malloc_exit_if_null((nn->config_size - 1) * SIZEOF_PTR);
+  for (i = 1; i < nn->config_size; ++i)
+  {
+    nn->layer_deltas[i - 1] = malloc_exit_if_null(nn->config[i] * sizeof(double));
   }
 
   return nn;
@@ -202,12 +209,19 @@ destruct_neural_network (neural_network_t* nn)
   }
   free_and_null(nn->feed_forwards);
 
-  // FREE: nn->layer_outputs
+  // FREE: nn->layer_sums
   for (i = 1; i < nn->config_size; ++i)
   {
-    free_and_null(nn->layer_outputs[i - 1]);
+    free_and_null(nn->layer_sums[i - 1]);
   }
-  free_and_null(nn->layer_outputs);
+  free_and_null(nn->layer_sums);
+
+  // FREE: nn->layer_deltas
+  for (i = 1; i < nn->config_size; ++i)
+  {
+    free_and_null(nn->layer_deltas[i - 1]);
+  }
+  free_and_null(nn->layer_deltas);
 
   // FREE: config
   free_and_null(nn->config);
@@ -332,7 +346,7 @@ feed_forward (const neural_network_t* nn,
       {
         sum += nn->feed_forwards[i - 1][k] * nn->weights[i - 1][k][j];
       }
-      nn->layer_outputs[i - 1][j] = sum;
+      nn->layer_sums[i - 1][j] = sum;
       nn->feed_forwards[i][j] = elliott(sum, 1.0, false);
     }
   }
@@ -343,13 +357,42 @@ resilient_propagate (const neural_network_t*  nn,
                      const training_set_t*    ts,
                      const size_t             training_set_index)
 {
+  static int i;
+  for (i = nn->config_size - 1; i > 0; --i)
+  {
+  }
   return 0.0;
 }
 
+inline double
+linear_error (const double target_value,
+              const double trained_value)
+{
+  return target_value - trained_value;
+}
+
+inline double
+tanh_error (const double target_value,
+            const double trained_value)
+{
+  return tanh (linear_error(target_value, trained_value));
+}
+
 void
-train (neural_network_t*  nn,
-       training_set_t*    ts,
-       double             threshold_error)
+train_neural_network (const neural_network_t* nn,
+                      const training_set_t*   ts,
+                      const double            threshold_error)
+{
+  train_neural_network_full(nn, ts, threshold_error, &linear_error);
+}
+
+
+void
+train_neural_network_full (const neural_network_t*  nn,
+                           const training_set_t*    ts,
+                           double                   threshold_error,
+                           double                   (*error_function) (const double,
+                                                                       const double))
 {
   double maximum_error = DBL_MAX;
   double current_error;
@@ -379,7 +422,6 @@ int main (int argc, char** argv)
   neural_network_t* nn = construct_neural_network(config, 3);
   training_set_t* ts = construct_training_set("xor.in", "xor.out");
   destruct_training_set(ts);
-  print_weights(nn);
   destruct_neural_network(nn);
   return 0;
 }
