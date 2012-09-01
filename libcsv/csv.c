@@ -6,28 +6,28 @@
 static size_t line_index;
 static size_t entry_index;
 
-void
+static void
 count_lines (int delim, void* csv_data)
 {
   csv_data_t* csvd = (csv_data_t*) csv_data;
   ++(csvd->line_count);
 }
 
-void
+static void
 increment_line (int delim, void* csv_data)
 {
   ++line_index;
   entry_index = 0;
 }
 
-void
+static void
 count_entries (void* entry, size_t entry_length, void* csv_data)
 {
   csv_data_t* csvd = (csv_data_t*) csv_data;
   ++(csvd->entry_counts[line_index]);
 }
 
-void
+static void
 read_entries (void* entry, size_t entry_length, void* csv_data)
 {
   csv_data_t* csvd = (csv_data_t*) csv_data;
@@ -36,7 +36,7 @@ read_entries (void* entry, size_t entry_length, void* csv_data)
   ++entry_index;
 }
 
-void
+static inline void
 csv_exit_if_error (csv_parser* parser)
 {
   printferr("Error while parsing file: %s\n", csv_strerror(csv_error(parser)));

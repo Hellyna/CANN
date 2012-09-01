@@ -1,5 +1,7 @@
-#ifndef NEURAL_NETWORK_H
-#define NEURAL_NETWORK_H
+#ifndef NEURAL_NETWORK_H_12AFA1B9_118C_4A47_BFB9_66D964F377ED
+#define NEURAL_NETWORK_H_12AFA1B9_118C_4A47_BFB9_66D964F377ED
+
+#include "error-data.h"
 
 struct training_set_t {
   size_t    training_set_size;
@@ -10,7 +12,7 @@ struct training_set_t {
 };
 
 struct neural_network_t {
-  int*      config;
+  size_t*   config;
   size_t    config_size;
 
   double*** weights;
@@ -20,6 +22,8 @@ struct neural_network_t {
   double**  feed_forwards;
   double**  layer_sums;
   double**  layer_deltas;
+
+  error_data_t* error_data;
 };
 
 typedef struct training_set_t   training_set_t;
@@ -33,15 +37,15 @@ void
 destruct_training_set (training_set_t* ts);
 
 neural_network_t*
-construct_neural_network (const int*    config,
+construct_neural_network (const size_t* config,
                           const size_t  config_size);
 
 neural_network_t*
-construct_neural_network_full (const int*   config,
-                               const size_t config_size,
-                               const double min_weight,
-                               const double max_weight,
-                               void  (*initialize_weights) (const neural_network_t*));
+construct_neural_network_full (const size_t* config,
+                               const size_t  config_size,
+                               const double  min_weight,
+                               const double  max_weight,
+                               void          (*initialize_weights) (const neural_network_t*));
 
 void
 destruct_neural_network (neural_network_t* nn);
@@ -55,20 +59,14 @@ initialize_uniform_weights (const neural_network_t* nn);
 void
 train_neural_network (const neural_network_t* nn,
                       const training_set_t*   ts,
-                      const double            threshold_error);
-void
-train_neural_network_full (const neural_network_t*  nn,
-                           const training_set_t*    ts,
-                           double                   threshold_error,
-                           double                   (*error_function) (const double,
-                                                                       const double));
+                      double                  (*activation_function)  (const double),
 
-double
-linear_error (const double target_value,
-              const double trained_value);
+                      double                  (*derivative_function)  (const double),
 
-double
-tanh_error (const double target_value,
-            const double trained_value);
+                      void                    (*propagation_loop)     (const neural_network_t*,
+                                                                       const training_set_t*,
+                                                                       const size_t,
+                                                                       void*),
+                      void*                   propagation_data);
 
-#endif /* NEURAL_NETWORK_H */
+#endif

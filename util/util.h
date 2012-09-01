@@ -1,6 +1,7 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef UTIL_H_84A458F6_C279_4C42_9C15_5DB1871DA11B
+#define UTIL_H_84A458F6_C279_4C42_9C15_5DB1871DA11B
 
+#include <stdlib.h>
 
 #if !(defined __LP64__ || defined __LLP64__) || defined _WIN32 && !defined _WIN64
 #define SIZEOF_PTR 4
