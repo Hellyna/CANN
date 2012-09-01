@@ -23,6 +23,9 @@ construct_resilient_propagation_data (const neural_network_t* nn,
   // INIT: data->derivative_function
   data->derivative_function = derivative_function;
 
+  // INIT: data->previous_error
+  data->previous_error = 0.0;
+
   const size_t num_weight_layers = nn->config_size - 1;
 
   // MALLOC: data->gradients

@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -O0 -g 
+#CFLAGS = -Wall -O0 -g 
+CFLAGS = -O2 -pipe -march=native -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2
 LDFLAGS =
 
 .PHONY: clean
