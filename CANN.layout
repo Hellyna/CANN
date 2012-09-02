@@ -16,7 +16,7 @@
 	<File name="libcsv\csv.c" open="0" top="0" tabpos="0">
 		<Cursor position="3487" topLine="130" />
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="4">
+	<File name="main.c" open="1" top="0" tabpos="4">
 		<Cursor position="277" topLine="2" />
 	</File>
 	<File name="neural-network.c" open="1" top="0" tabpos="3">
@@ -25,8 +25,8 @@
 	<File name="neural-network.h" open="0" top="0" tabpos="0">
 		<Cursor position="725" topLine="0" />
 	</File>
-	<File name="resilient-propagation.c" open="1" top="0" tabpos="5">
-		<Cursor position="2954" topLine="111" />
+	<File name="resilient-propagation.c" open="1" top="1" tabpos="5">
+		<Cursor position="2960" topLine="96" />
 	</File>
 	<File name="resilient-propagation.h" open="1" top="0" tabpos="6">
 		<Cursor position="440" topLine="0" />

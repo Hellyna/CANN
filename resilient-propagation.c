@@ -101,7 +101,7 @@ update_weight (const resilient_propagation_data_t* data,
                const size_t                        nlni)
 {
   // current_weight_layer_index
-  double weight_change, delta;
+  double weight_change = 0.0, delta;
   short gradient_change = sign(training->gradients[cli][clni][nlni] * training->previous_gradients[cli][clni][nlni]);
   switch (gradient_change)
   {
