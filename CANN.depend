@@ -1,0 +1,103 @@
+# depslib dependency file v1.0
+1346539965 source:f:\users\hellyna\desktop\cann\error-data.c
+	<math.h>
+	"util/util.h"
+	"error-data.h"
+
+1346516764 f:\users\hellyna\desktop\cann\util\util.h
+	<stdlib.h>
+
+1346539726 f:\users\hellyna\desktop\cann\error-data.h
+	<stdlib.h>
+
+1346518746 source:f:\users\hellyna\desktop\cann\libcsv\csv.c
+	<string.h>
+	"../util/util.h"
+	"csv.h"
+
+1346516764 f:\users\hellyna\desktop\cann\libcsv\csv.h
+	"libcsv.h"
+
+1346516764 f:\users\hellyna\desktop\cann\libcsv\libcsv.h
+	<stdlib.h>
+	<stdio.h>
+
+1346516764 source:f:\users\hellyna\desktop\cann\libcsv\libcsv.c
+	<stdint.h>
+	"libcsv.h"
+
+1346570748 source:f:\users\hellyna\desktop\cann\resilient-propagation.c
+	<math.h>
+	"util/util.h"
+	"util/math.h"
+	"resilient-propagation.h"
+
+1346519234 f:\users\hellyna\desktop\cann\util\math.h
+
+1346569432 f:\users\hellyna\desktop\cann\resilient-propagation.h
+	"neural-network.h"
+	"training.h"
+
+1346549915 f:\users\hellyna\desktop\cann\neural-network.h
+	"error-data.h"
+
+1346516764 source:f:\users\hellyna\desktop\cann\util\math.c
+	"math.h"
+
+1346516764 source:f:\users\hellyna\desktop\cann\util\util.c
+	<stdlib.h>
+	<stdio.h>
+	<stdarg.h>
+	"util.h"
+
+1346539036 source:f:\users\hellyna\desktop\cann\activation-functions.c
+	<math.h>
+	"activation-functions.h"
+
+1346538752 f:\users\hellyna\desktop\cann\activation-functions.h
+
+1346565671 source:f:\users\hellyna\desktop\cann\neural-network.c
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<time.h>
+	"util/util.h"
+	"neural-network.h"
+
+1346545684 source:f:\users\hellyna\desktop\cann\gradient.c
+	"util/util.h"
+	"gradient.h"
+
+1346563319 f:\users\hellyna\desktop\cann\gradient.h
+	"neural-network.h"
+
+1346571271 source:f:\users\hellyna\desktop\cann\main.c
+	<stdlib.h>
+	<stdio.h>
+	"neural-network.h"
+	"activation-functions.h"
+	"resilient-propagation.h"
+	"training-set.h"
+	"training.h"
+
+1346560344 f:\users\hellyna\desktop\cann\training-set.h
+	<stdlib.h>
+
+1346568109 f:\users\hellyna\desktop\cann\training.h
+	"training-set.h"
+	"error-data.h"
+	"neural-network.h"
+
+1346560387 source:f:\users\hellyna\desktop\cann\training-set.c
+	"util/util.h"
+	"libcsv/csv.h"
+	"training-set.h"
+
+1346569519 source:f:\users\hellyna\desktop\cann\training.c
+	<stdio.h>
+	<float.h>
+	<stdbool.h>
+	<math.h>
+	"util/util.h"
+	"training.h"
+

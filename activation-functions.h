@@ -7,24 +7,28 @@ double
 elliott_activation (const double x);
 
 double
-elliott_derivative (const double x);
+elliott_derivative (const double value_before_activation,
+                    const double value_after_activation);
 
 double
 elliott_symmetric_activation (const double x);
 
 double
-elliott_symmetric_derivative (const double b);
+elliott_symmetric_derivative (const double value_before_activation,
+                              const double value_after_activation);
 
 double
 tanh_activation (const double x);
 
 double
-tanh_derivative (const double x);
+tanh_derivative (const double value_before_activation,
+                 const double value_after_activation);
 
 double
 sigmoid_activation (const double x);
 
 double
-sigmoid_derivative (const double x);
+sigmoid_derivative (const double value_before_activation,
+                    const double value_after_activation);
 
 #endif

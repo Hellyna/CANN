@@ -7,7 +7,7 @@ enum error_calculation_t
 {
   MEAN_SQUARE,
   ROOT_MEAN_SQUARE,
-  SUM_OF_SQUARES,
+  SUM_OF_SQUARES
 };
 
 struct error_data_t
@@ -19,19 +19,19 @@ struct error_data_t
 typedef struct error_data_t error_data_t;
 typedef enum error_calculation_t error_calculation_t;
 
-inline error_data_t*
+error_data_t*
 construct_error_data ();
 
-inline void
+void
 destruct_error_data (error_data_t* errord);
 
-inline void
+void
 reset_error_data (error_data_t* errord);
 
-inline double
+double
 update_error (error_data_t* errord,
-              const double  actual,
-              const double  ideal);
+              const double  ideal,
+              const double  actual);
 
 double
 calculate_error (const error_data_t* errord,

@@ -10,9 +10,11 @@ elliott_activation (const double x)
 }
 
 double
-elliott_derivative (const double x)
+elliott_derivative (const double value_before_activation,
+                    const double value_after_activation)
 {
-  double temp = 1.0 + fabs(x * ELLIOTT_SLOPE);
+  (void) value_after_activation;
+  double temp = 1.0 + fabs(value_before_activation * ELLIOTT_SLOPE);
   return ELLIOTT_SLOPE / (2.0 * (temp) * (temp));
 }
 
@@ -24,23 +26,26 @@ elliott_symmetric_activation (const double x)
 }
 
 double
-elliott_symmetric_derivative (const double x)
+elliott_symmetric_derivative (const double value_before_activation,
+                              const double value_after_activation)
 {
-  double temp = 1.0 + fabs(x * ELLIOTT_SLOPE);
+  (void) value_after_activation;
+  double temp = 1.0 + fabs(value_before_activation * ELLIOTT_SLOPE);
   return ELLIOTT_SLOPE / (temp * temp);
 }
 
 double
 tanh_activation (const double x)
 {
-  double temp = exp(x * 2.0);
-  return (temp - 1.0) / (temp + 1.0);
+  return tanh(x);
 }
 
 double
-tanh_derivative (const double x)
+tanh_derivative (const double value_before_activation,
+                 const double value_after_activation)
 {
-  return 1.0 - pow(tanh_activation(x), 2.0);
+  (void) value_before_activation;
+  return (1.0 - value_after_activation * value_after_activation);
 }
 
 double
@@ -50,8 +55,10 @@ sigmoid_activation (const double x)
 }
 
 double
-sigmoid_derivative (const double x)
+sigmoid_derivative (const double value_before_activation,
+                    const double value_after_activation)
 {
-  return x * (1.0 - x);
+  (void) value_before_activation;
+  return value_after_activation * (1.0 - value_after_activation);
 }
 

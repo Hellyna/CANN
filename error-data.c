@@ -17,7 +17,7 @@ void
 destruct_error_data (error_data_t* errord)
 {
   // FREE: errord
-    free_and_null(errord);
+  free_and_null(errord);
 }
 
 inline void
@@ -29,8 +29,8 @@ reset_error_data (error_data_t* errord)
 
 inline double
 update_error (error_data_t* errord,
-              const double  actual,
-              const double  ideal)
+              const double  ideal,
+              const double  actual)
 {
   double error = ideal - actual;
   errord->square_sum_error += error * error;
@@ -76,7 +76,7 @@ calculate_error (const error_data_t* errord,
       error = calculate_sum_of_squares_error(errord);
       break;
     default:
-      error = -1.0;
+      error = calculate_mean_square_error(errord);
   }
   return error;
 }
