@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 
-
 #include <float.h>
 #include <stdbool.h>
 #include <math.h>
+
+#include <omp.h>
 
 #include "util/util.h"
 
@@ -139,8 +140,9 @@ _update_delta (const training_t*       training,
                const size_t            current_layer_neuron_index)
 {
   training->_deltas[current_layer_index - 1][current_layer_neuron_index] =
-    error * (*(training->_derivative_function)) (training->_pre_activated_sums[current_layer_index][current_layer_neuron_index],
-                                          training->_post_activated_sums[current_layer_index][current_layer_neuron_index]);
+    error * ((*(training->_derivative_function))
+      (training->_pre_activated_sums[current_layer_index][current_layer_neuron_index],
+       training->_post_activated_sums[current_layer_index][current_layer_neuron_index]) + 0.1);
 }
 
 static inline void
