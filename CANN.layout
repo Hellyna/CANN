@@ -4,8 +4,8 @@
 	<File name="activation-functions.c" open="0" top="0" tabpos="0">
 		<Cursor position="1152" topLine="0" />
 	</File>
-	<File name="activation-functions.h" open="0" top="0" tabpos="0">
-		<Cursor position="884" topLine="5" />
+	<File name="activation-functions.h" open="1" top="0" tabpos="3">
+		<Cursor position="592" topLine="0" />
 	</File>
 	<File name="error-data.c" open="0" top="0" tabpos="0">
 		<Cursor position="1796" topLine="56" />
@@ -16,20 +16,20 @@
 	<File name="libcsv\csv.c" open="0" top="0" tabpos="0">
 		<Cursor position="3487" topLine="130" />
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="4">
-		<Cursor position="277" topLine="2" />
+	<File name="main.c" open="1" top="1" tabpos="1">
+		<Cursor position="457" topLine="3" />
 	</File>
-	<File name="neural-network.c" open="1" top="0" tabpos="3">
-		<Cursor position="0" topLine="84" />
+	<File name="neural-network.c" open="0" top="0" tabpos="4">
+		<Cursor position="1354" topLine="42" />
 	</File>
-	<File name="neural-network.h" open="0" top="0" tabpos="0">
-		<Cursor position="725" topLine="0" />
+	<File name="neural-network.h" open="1" top="0" tabpos="2">
+		<Cursor position="367" topLine="19" />
 	</File>
-	<File name="resilient-propagation.c" open="1" top="1" tabpos="5">
-		<Cursor position="2960" topLine="96" />
+	<File name="resilient-propagation.c" open="1" top="0" tabpos="5">
+		<Cursor position="3497" topLine="142" />
 	</File>
-	<File name="resilient-propagation.h" open="1" top="0" tabpos="6">
-		<Cursor position="440" topLine="0" />
+	<File name="resilient-propagation.h" open="1" top="0" tabpos="4">
+		<Cursor position="937" topLine="0" />
 	</File>
 	<File name="training-set.c" open="0" top="0" tabpos="0">
 		<Cursor position="48" topLine="0" />
@@ -37,13 +37,16 @@
 	<File name="training-set.h" open="0" top="0" tabpos="0">
 		<Cursor position="140" topLine="0" />
 	</File>
-	<File name="training.c" open="1" top="0" tabpos="2">
-		<Cursor position="8765" topLine="13" />
+	<File name="training.c" open="1" top="0" tabpos="6">
+		<Cursor position="8225" topLine="134" />
 	</File>
-	<File name="training.h" open="1" top="0" tabpos="1">
-		<Cursor position="821" topLine="18" />
+	<File name="training.h" open="1" top="0" tabpos="7">
+		<Cursor position="309" topLine="19" />
+	</File>
+	<File name="util\math.c" open="0" top="0" tabpos="0">
+		<Cursor position="296" topLine="0" />
 	</File>
 	<File name="util\math.h" open="0" top="0" tabpos="0">
-		<Cursor position="209" topLine="0" />
+		<Cursor position="107" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

@@ -199,23 +199,25 @@ _process_training_data (const training_t*       training,
           clni,
   // next_layer_neuron_index,
           nlni;
-  double error, output, delta;
   cli = nn->config_size - 1;
+  double errors[nn->config[cli]], output, delta;
   for (clni = 0; clni < nn->config[cli]; ++clni)
   {
-    output = training->_post_activated_sums[cli][clni];
-#ifdef CANN_DEBUG
-    printf("Trained output %d: %g\n", clni, output);
-#endif
-    error =
+    errors[clni] =
       update_error(training->error_data,
-        ts->target_outputs[training_set_index][clni], output);
-#ifdef CANN_DEBUG
-    printf("Target output %d: %g\n", clni, ts->target_outputs[training_set_index][clni]);
-#endif
-    _update_delta(training, error, cli, clni);
+        ts->target_outputs[training_set_index][clni], training->_post_activated_sums[cli][clni]);
   }
 
+  for (clni = 0; clni < nn->config[cli]; ++clni)
+  {
+#ifdef CANN_DEBUG
+    printf("Trained output %d: %g\n", clni, training->_post_activated_sums[cli][clni]);
+    printf("Target output %d: %g\n", clni, ts->target_outputs[training_set_index][clni]);
+#endif
+    _update_delta(training, errors[clni], cli, clni);
+  }
+
+  double error;
   for (cli = nn->config_size - 2; cli > 0; --cli)
   {
     nli = cli + 1;
@@ -256,13 +258,13 @@ train_neural_network (const training_t*       training,
   while (true)
   {
     reset_error_data(training->error_data);
-    current_error = 0.0;
+
     for (training_set_index = 0; training_set_index < training_set_size; ++training_set_index)
     {
       _feed_forward(training, nn, ts, training_set_index);
-      current_error += calculate_error(training->error_data, MEAN_SQUARE);
       _process_training_data(training, nn, ts, training_set_index);
     }
+    current_error = calculate_error(training->error_data, MEAN_SQUARE);
 
     if (fabs(best_error - current_error) < DEFAULT_MIN_IMPROVEMENT)
     {
@@ -284,11 +286,9 @@ train_neural_network (const training_t*       training,
       printf("Current error: %g\n", current_error);
     }
 #ifdef CANN_DEBUG
-
     printf("\n");
 #endif
     (*propagation_loop) (propagation_data, nn, training);
-    ++training_set_index;
 #ifdef CANN_DEBUG
     getchar();
 #endif

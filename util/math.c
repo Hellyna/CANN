@@ -1,5 +1,6 @@
 #include "math.h"
 
+#if !(defined __GNU_LIBRARY__ || __GLIBC__ || __GLIBC_MINOR__)
 inline double fmin(const double a,
                    const double b)
 {
@@ -11,3 +12,4 @@ inline double fmax(const double a,
 {
   return (a >= b) ? a : b;
 }
+#endif

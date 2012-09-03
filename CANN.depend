@@ -32,7 +32,7 @@
 	"util/math.h"
 	"resilient-propagation.h"
 
-1346519234 f:\users\hellyna\desktop\cann\util\math.h
+1346640951 f:\users\hellyna\desktop\cann\util\math.h
 
 1346569432 f:\users\hellyna\desktop\cann\resilient-propagation.h
 	"neural-network.h"
@@ -41,7 +41,7 @@
 1346549915 f:\users\hellyna\desktop\cann\neural-network.h
 	"error-data.h"
 
-1346516764 source:f:\users\hellyna\desktop\cann\util\math.c
+1346640947 source:f:\users\hellyna\desktop\cann\util\math.c
 	"math.h"
 
 1346516764 source:f:\users\hellyna\desktop\cann\util\util.c
@@ -56,7 +56,7 @@
 
 1346538752 f:\users\hellyna\desktop\cann\activation-functions.h
 
-1346565671 source:f:\users\hellyna\desktop\cann\neural-network.c
+1346575076 source:f:\users\hellyna\desktop\cann\neural-network.c
 	<stdlib.h>
 	<string.h>
 	<math.h>
@@ -71,7 +71,7 @@
 1346563319 f:\users\hellyna\desktop\cann\gradient.h
 	"neural-network.h"
 
-1346571271 source:f:\users\hellyna\desktop\cann\main.c
+1346643689 source:f:\users\hellyna\desktop\cann\main.c
 	<stdlib.h>
 	<stdio.h>
 	"neural-network.h"
@@ -93,11 +93,16 @@
 	"libcsv/csv.h"
 	"training-set.h"
 
-1346569519 source:f:\users\hellyna\desktop\cann\training.c
+1346643421 source:f:\users\hellyna\desktop\cann\training.c
 	<stdio.h>
 	<float.h>
 	<stdbool.h>
 	<math.h>
 	"util/util.h"
 	"training.h"
+
+1346617720 source:f:\users\hellyna\desktop\cann\back-propagation.c
+	"back-propagation.h"
+
+1346617908 f:\users\hellyna\desktop\cann\back-propagation.h
 
