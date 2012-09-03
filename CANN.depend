@@ -71,7 +71,7 @@
 1346563319 f:\users\hellyna\desktop\cann\gradient.h
 	"neural-network.h"
 
-1346643689 source:f:\users\hellyna\desktop\cann\main.c
+1346685964 source:f:\users\hellyna\desktop\cann\main.c
 	<stdlib.h>
 	<stdio.h>
 	"neural-network.h"
@@ -83,7 +83,8 @@
 1346560344 f:\users\hellyna\desktop\cann\training-set.h
 	<stdlib.h>
 
-1346568109 f:\users\hellyna\desktop\cann\training.h
+1346685798 f:\users\hellyna\desktop\cann\training.h
+	<stdbool.h>
 	"training-set.h"
 	"error-data.h"
 	"neural-network.h"
@@ -93,11 +94,12 @@
 	"libcsv/csv.h"
 	"training-set.h"
 
-1346643421 source:f:\users\hellyna\desktop\cann\training.c
+1346685909 source:f:\users\hellyna\desktop\cann\training.c
 	<stdio.h>
 	<float.h>
 	<stdbool.h>
 	<math.h>
+	<omp.h>
 	"util/util.h"
 	"training.h"
 

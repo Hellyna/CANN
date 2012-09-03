@@ -16,10 +16,11 @@
 #include "training.h"
 
 training_t*
-construct_training (neural_network_t* nn,
-                    double            (*activation_function) (const double),
-                    double            (*derivative_function) (const double,
-                                                              const double))
+construct_training (const neural_network_t* nn,
+                    double                  (*activation_function) (const double),
+                    double                  (*derivative_function) (const double,
+                                                                    const double),
+                    const bool              fix_flat_spot)
 {
   // MALLOC: training
   training_t* training = malloc_exit_if_null(sizeof(training_t));
@@ -29,6 +30,9 @@ construct_training (neural_network_t* nn,
 
   // INIT: training->_derivative_function
   training->_derivative_function = derivative_function;
+
+  // INIT: training->_fix_flat_spot
+  training->_fix_flat_spot = fix_flat_spot;
 
   // MALLOC: training->_post_activated_sums
   size_t i;
@@ -141,10 +145,14 @@ _update_delta (const training_t*       training,
                const size_t            current_layer_index,
                const size_t            current_layer_neuron_index)
 {
+  double flat_spot_fix = 0.0;
+  if (training->_fix_flat_spot)
+    flat_spot_fix = 0.1;
+
   training->_deltas[current_layer_index - 1][current_layer_neuron_index] =
     error * ((*(training->_derivative_function))
       (training->_pre_activated_sums[current_layer_index][current_layer_neuron_index],
-       training->_post_activated_sums[current_layer_index][current_layer_neuron_index]) + 0.1);
+       training->_post_activated_sums[current_layer_index][current_layer_neuron_index]) + flat_spot_fix);
 }
 
 static inline void
@@ -251,7 +259,8 @@ train_neural_network (const training_t*       training,
                                                                    const neural_network_t*,
                                                                    const training_t*),
 
-                      void*                   propagation_data)
+                      void*                   propagation_data,
+                      const size_t            print_every_x_epoch)
 {
   double best_error = DBL_MAX;
   double current_error;
@@ -284,7 +293,7 @@ train_neural_network (const training_t*       training,
     }
 
     best_error = fmin(current_error, best_error);
-    if (epoch % 200000 == 0)
+    if (print_every_x_epoch != 0 && epoch % print_every_x_epoch == 0)
     {
       printf("Epoch: %d, ", epoch);
       printf("Current error: %g\n", current_error);
