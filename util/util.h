@@ -23,19 +23,33 @@ void
 free_and_null (void* p);
 
 void
-exit_if_null (void* p);
+exit_if_null (const void* const p);
 
 void
-exit_if_not_zero (int n);
+exit_if_not_zero (const int n);
 
 int
-printferr (const char *format, ...);
+putserr (const char* const str);
 
 void
-printferr_and_exit (const char *format, ...);
+putserr_and_exit (const char* const str);
 
 void
-printferr_and_exitno (int exit_value, const char *format, ...);
+putserr_and_exitno (const int         exit_value,
+                    const char* const str);
+
+int
+printferr (const char* const format,
+           ...);
+
+void
+printferr_and_exit (const char* const format,
+                    ...);
+
+void
+printferr_and_exitno (const int         exit_value,
+                      const char* const format,
+                      ...);
 #endif /* UTIL_H */
 
 

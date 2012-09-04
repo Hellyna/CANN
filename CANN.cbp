@@ -11,6 +11,7 @@
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-a" />
 				<Compiler>
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
@@ -59,6 +60,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="neural-network.h" />
+		<Unit filename="normalization.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="normalization.h" />
 		<Unit filename="resilient-propagation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -79,6 +84,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="util\util.h" />
+		<Unit filename="validation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="validation.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

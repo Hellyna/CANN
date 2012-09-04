@@ -87,7 +87,7 @@ construct_training (const neural_network_t* nn,
 }
 
 void
-destruct_training(training_t* training,
+destruct_training(training_t*             training,
                   const neural_network_t* nn)
 {
   // FREE: training->error_data
@@ -259,7 +259,7 @@ train_neural_network (const training_t*       training,
                                                                    const neural_network_t*,
                                                                    const training_t*),
 
-                      void*                   propagation_data,
+                      void* const             propagation_data,
                       const size_t            print_every_x_epoch)
 {
   double best_error = DBL_MAX;

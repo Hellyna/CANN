@@ -4,7 +4,7 @@
 	"util/util.h"
 	"error-data.h"
 
-1346516764 f:\users\hellyna\desktop\cann\util\util.h
+1346736349 f:\users\hellyna\desktop\cann\util\util.h
 	<stdlib.h>
 
 1346539726 f:\users\hellyna\desktop\cann\error-data.h
@@ -44,7 +44,7 @@
 1346640947 source:f:\users\hellyna\desktop\cann\util\math.c
 	"math.h"
 
-1346516764 source:f:\users\hellyna\desktop\cann\util\util.c
+1346736359 source:f:\users\hellyna\desktop\cann\util\util.c
 	<stdlib.h>
 	<stdio.h>
 	<stdarg.h>
@@ -71,30 +71,33 @@
 1346563319 f:\users\hellyna\desktop\cann\gradient.h
 	"neural-network.h"
 
-1346685964 source:f:\users\hellyna\desktop\cann\main.c
+1346793027 source:f:\users\hellyna\desktop\cann\main.c
 	<stdlib.h>
+	<string.h>
 	<stdio.h>
+	<getopt.h>
+	"util/util.h"
 	"neural-network.h"
+	"training.h"
 	"activation-functions.h"
 	"resilient-propagation.h"
-	"training-set.h"
-	"training.h"
 
-1346560344 f:\users\hellyna\desktop\cann\training-set.h
+1346793406 f:\users\hellyna\desktop\cann\training-set.h
 	<stdlib.h>
 
-1346685798 f:\users\hellyna\desktop\cann\training.h
+1346736429 f:\users\hellyna\desktop\cann\training.h
 	<stdbool.h>
 	"training-set.h"
 	"error-data.h"
 	"neural-network.h"
 
-1346560387 source:f:\users\hellyna\desktop\cann\training-set.c
+1346795684 source:f:\users\hellyna\desktop\cann\training-set.c
 	"util/util.h"
 	"libcsv/csv.h"
+	"validation.h"
 	"training-set.h"
 
-1346685909 source:f:\users\hellyna\desktop\cann\training.c
+1346736028 source:f:\users\hellyna\desktop\cann\training.c
 	<stdio.h>
 	<float.h>
 	<stdbool.h>
@@ -107,4 +110,18 @@
 	"back-propagation.h"
 
 1346617908 f:\users\hellyna\desktop\cann\back-propagation.h
+
+1346726291 source:f:\users\hellyna\desktop\cann\normalization.c
+	"util/util.h"
+	"normalization.h"
+
+1346793677 f:\users\hellyna\desktop\cann\normalization.h
+	"libcsv/csv.h"
+
+1346795217 f:\users\hellyna\desktop\cann\validation.h
+	"libcsv/csv.h"
+
+1346795536 source:f:\users\hellyna\desktop\cann\validation.c
+	"util/util.h"
+	"validation.h"
 

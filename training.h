@@ -35,7 +35,7 @@ construct_training (const neural_network_t* nn,
                     const bool              fix_flat_spot);
 
 void
-destruct_training(training_t* training,
+destruct_training(training_t*             training,
                   const neural_network_t* nn);
 
 double
@@ -46,6 +46,6 @@ train_neural_network (const training_t*       training,
                                                                    const neural_network_t*,
                                                                    const training_t*),
 
-                      void*                   propagation_data,
+                      void* const             propagation_data,
                       const size_t            print_every_x_epoch);
 #endif

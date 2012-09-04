@@ -1,6 +1,7 @@
 
 #include "util/util.h"
 #include "libcsv/csv.h"
+#include "validation.h"
 
 #include "training-set.h"
 
@@ -14,42 +15,14 @@ construct_training_set (const char* input_data_path,
   csv_data_t* input_data = construct_csv_data(input_data_path);
   csv_data_t* output_data = construct_csv_data(output_data_path);
 
-  // VALIDATE: training_set_size
-  if (input_data->line_count != output_data->line_count)
-  {
-    printferr_and_exit("Input and output data file entries are not equal.\n");
-  }
-
   // INIT: ts->training_set_size
-  ts->training_set_size = input_data->line_count - 1;
-
-  // VALIDATE: ts->input_size
-  size_t i, temp = input_data->entry_counts[0];
-  for (i = 1; i < ts->training_set_size; ++i)
-  {
-    if (temp != input_data->entry_counts[i])
-    {
-      printferr_and_exit("Malformed input data file.\n");
-    }
-    temp = input_data->entry_counts[i];
-  }
+  ts->training_set_size = validate_csv_io_data_line_count(input_data, output_data) - 1;
 
   // INIT: ts->input_size
-  ts->input_size = temp;
-
-  // VALIDATE: ts->output_size
-  temp = output_data->entry_counts[0];
-  for (i = 1; i < ts->training_set_size; ++i)
-  {
-    if (temp != output_data->entry_counts[i])
-    {
-      printferr_and_exit("Malformed output data file.\n");
-    }
-    temp = output_data->entry_counts[i];
-  }
+  ts->input_size = validate_csv_data_entry_counts(input_data);
 
   // INIT: ts->output_size
-  ts->output_size = temp;
+  ts->output_size = validate_csv_data_entry_counts(output_data);
 
   // MALLOC: ts->target_inputs
   // INIT: ts->target_inputs
@@ -58,7 +31,7 @@ construct_training_set (const char* input_data_path,
   ts->target_inputs = malloc_exit_if_null(SIZEOF_PTR * ts->training_set_size);
   ts->target_outputs = malloc_exit_if_null(SIZEOF_PTR * ts->training_set_size);
 
-  size_t j;
+  size_t i, j;
   for (i = 0; i < ts->training_set_size; ++i)
   {
     ts->target_inputs[i] = malloc_exit_if_null(ts->input_size * sizeof(double));

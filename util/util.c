@@ -34,8 +34,8 @@ free_and_null (void* p)
   p = NULL;
 }
 
-inline void
-exit_if_null (void* p)
+void
+exit_if_null (const void* const p)
 {
   if (p == NULL)
   {
@@ -44,8 +44,8 @@ exit_if_null (void* p)
   }
 }
 
-inline void
-exit_if_not_zero (int n)
+void
+exit_if_not_zero (const int n)
 {
   if (n != 0)
   {
@@ -54,8 +54,31 @@ exit_if_not_zero (int n)
   }
 }
 
-inline int
-printferr (const char *format, ...)
+int
+putserr (const char* const str)
+{
+  int retr = fputs(str, stderr);
+  return retr;
+}
+
+void
+putserr_and_exit (const char* const str)
+{
+  fputs(str, stderr);
+  exit(EXIT_FAILURE);
+}
+
+void
+putserr_and_exitno (const int         exit_value,
+                    const char* const str)
+{
+  fputs(str, stderr);
+  exit(exit_value);
+}
+
+int
+printferr (const char* const format,
+           ...)
 {
   va_list args;
   va_start(args, format);
@@ -64,22 +87,25 @@ printferr (const char *format, ...)
   return retr;
 }
 
-inline void
-printferr_and_exit (const char *format, ...)
+void
+printferr_and_exit (const char * const format,
+                    ...)
 {
   va_list args;
   va_start(args, format);
-  printferr(format, args);
+  vfprintf(stderr, format, args);
   va_end(args);
   exit(EXIT_FAILURE);
 }
 
-inline void
-printferr_and_exitno (int exit_value, const char *format, ...)
+void
+printferr_and_exitno (const int         exit_value,
+                      const char* const format,
+                      ...)
 {
   va_list args;
   va_start(args, format);
-  printferr(format, args);
+  vfprintf(stderr, format, args);
   va_end(args);
   exit(exit_value);
 }

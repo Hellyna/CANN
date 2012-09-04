@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
+	<ActiveTarget name="Debug" />
 	<File name="activation-functions.c" open="0" top="0" tabpos="0">
-		<Cursor position="484" topLine="30" />
+		<Cursor position="1075" topLine="0" />
 	</File>
 	<File name="activation-functions.h" open="0" top="0" tabpos="3">
 		<Cursor position="592" topLine="5" />
 	</File>
 	<File name="error-data.c" open="0" top="0" tabpos="0">
-		<Cursor position="1796" topLine="56" />
+		<Cursor position="1537" topLine="0" />
 	</File>
 	<File name="error-data.h" open="0" top="0" tabpos="0">
 		<Cursor position="388" topLine="0" />
 	</File>
 	<File name="libcsv\csv.c" open="0" top="0" tabpos="0">
-		<Cursor position="3487" topLine="130" />
+		<Cursor position="3517" topLine="0" />
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="1">
-		<Cursor position="768" topLine="3" />
+	<File name="libcsv\csv.h" open="1" top="0" tabpos="5">
+		<Cursor position="238" topLine="2" />
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="1">
+		<Cursor position="227" topLine="93" />
 	</File>
 	<File name="neural-network.c" open="0" top="0" tabpos="4">
-		<Cursor position="1525" topLine="78" />
+		<Cursor position="173" topLine="0" />
 	</File>
 	<File name="neural-network.h" open="0" top="0" tabpos="2">
 		<Cursor position="922" topLine="0" />
 	</File>
-	<File name="resilient-propagation.c" open="1" top="0" tabpos="2">
-		<Cursor position="5178" topLine="58" />
+	<File name="normalization.c" open="1" top="0" tabpos="2">
+		<Cursor position="554" topLine="6" />
+	</File>
+	<File name="normalization.h" open="1" top="0" tabpos="3">
+		<Cursor position="235" topLine="0" />
+	</File>
+	<File name="resilient-propagation.c" open="0" top="0" tabpos="2">
+		<Cursor position="399" topLine="0" />
 	</File>
 	<File name="resilient-propagation.h" open="0" top="0" tabpos="4">
 		<Cursor position="600" topLine="12" />
 	</File>
 	<File name="training-set.c" open="0" top="0" tabpos="0">
-		<Cursor position="48" topLine="0" />
+		<Cursor position="655" topLine="3" />
 	</File>
-	<File name="training-set.h" open="0" top="0" tabpos="0">
-		<Cursor position="140" topLine="0" />
+	<File name="training-set.h" open="1" top="1" tabpos="4">
+		<Cursor position="222" topLine="0" />
 	</File>
-	<File name="training.c" open="1" top="0" tabpos="3">
-		<Cursor position="9399" topLine="276" />
+	<File name="training.c" open="0" top="0" tabpos="3">
+		<Cursor position="4394" topLine="8" />
 	</File>
-	<File name="training.h" open="1" top="0" tabpos="4">
-		<Cursor position="1834" topLine="28" />
+	<File name="training.h" open="0" top="0" tabpos="4">
+		<Cursor position="867" topLine="21" />
 	</File>
 	<File name="util\math.c" open="0" top="0" tabpos="0">
 		<Cursor position="296" topLine="0" />
@@ -49,7 +58,16 @@
 	<File name="util\math.h" open="0" top="0" tabpos="0">
 		<Cursor position="107" topLine="0" />
 	</File>
+	<File name="util\util.c" open="0" top="0" tabpos="0">
+		<Cursor position="567" topLine="35" />
+	</File>
 	<File name="util\util.h" open="0" top="0" tabpos="0">
-		<Cursor position="438" topLine="0" />
+		<Cursor position="470" topLine="32" />
+	</File>
+	<File name="validation.c" open="0" top="0" tabpos="0">
+		<Cursor position="420" topLine="8" />
+	</File>
+	<File name="validation.h" open="0" top="0" tabpos="0">
+		<Cursor position="134" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
