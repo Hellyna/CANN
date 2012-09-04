@@ -1,7 +1,6 @@
 #include <math.h>
 
 #include "util/util.h"
-#include "util/math.h"
 
 #include "resilient-propagation.h"
 
