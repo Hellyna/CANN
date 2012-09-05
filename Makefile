@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -O0 -g -Wall -Wextra -pedantic -Werror -std=c99
-#CFLAGS = -O2 -pipe -march=native --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2
+#CFLAGS = -O0 -g -Wall -Wextra -pedantic -Werror -std=c99
+CFLAGS = -O2 -pipe -march=native --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2
 #LDFLAGS = -lm -fopenmpa
 LDFLAGS = -lm
 
@@ -8,8 +8,8 @@ LDFLAGS = -lm
 
 all: neural-network
 
-neural-network: main.o neural-network.o activation-functions.o error-data.o validation.o normalization.o training.o training-set.o resilient-propagation.o libcsv.o csv.o util.o 
-	$(CC) $(LDFLAGS) main.o neural-network.o activation-functions.o error-data.o validation.o normalization.o training.o training-set.o resilient-propagation.o libcsv.o csv.o util.o -o neural-network
+neural-network: main.o neural-network.o activation-functions.o error-data.o validation.o training.o training-set.o resilient-propagation.o libcsv.o csv.o util.o 
+	$(CC) $(LDFLAGS) main.o neural-network.o activation-functions.o error-data.o validation.o training.o training-set.o resilient-propagation.o libcsv.o csv.o util.o -o neural-network
 
 main.o:
 	$(CC) $(CFLAGS) -c main.c
@@ -25,9 +25,6 @@ error-data.o:
 
 validation.o:
 	$(CC) $(CFLAGS) -c validation.c
-
-normalization.o:
-	$(CC) $(CFLAGS) -c normalization.c
 
 training.o:
 	$(CC) $(CFLAGS) -c training.c
