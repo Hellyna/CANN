@@ -1,3 +1,4 @@
+#include <string.h>
 
 #include "util/util.h"
 #include "libcsv/csv.h"
@@ -47,6 +48,25 @@ construct_training_set (const char* input_data_path,
     }
   }
 
+  // MALLOC: ts->input_entries_desc
+  ts->input_entries_desc = malloc_exit_if_null(ts->input_size * SIZEOF_PTR);
+  size_t size;
+  for (i = 0; i < ts->input_size; ++i)
+  {
+    size = (strlen(input_data->data[0][i]) + 1) * sizeof(char);
+    ts->input_entries_desc[i] = malloc_exit_if_null(size);
+    strncpy(ts->input_entries_desc[i], input_data->data[0][i], strlen(input_data->data[0][i]));
+  }
+
+  // MALLOC: ts->output_entries_desc
+  ts->output_entries_desc = malloc_exit_if_null(ts->output_size * SIZEOF_PTR);
+  for (i = 0; i < ts->output_size; ++i)
+  {
+    size = (strlen(output_data->data[0][i]) + 1) * sizeof(char);
+    ts->output_entries_desc[i] = malloc_exit_if_null(size);
+    strncpy(ts->output_entries_desc[i], output_data->data[0][i], strlen(output_data->data[0][i]));
+  }
+
   destruct_csv_data(input_data);
   destruct_csv_data(output_data);
   return ts;
@@ -56,9 +76,23 @@ construct_training_set (const char* input_data_path,
 void
 destruct_training_set (training_set_t* ts)
 {
+  // FREE: ts->input_entries_desc
+  size_t i;
+  for (i = 0; i < ts->input_size; ++i)
+  {
+    free_and_null(ts->input_entries_desc[i]);
+  }
+  free_and_null(ts->input_entries_desc);
+
+  // FREE: ts->output_entries_desc
+  for (i = 0; i < ts->output_size; ++i)
+  {
+    free_and_null(ts->output_entries_desc[i]);
+  }
+  free_and_null(ts->output_entries_desc);
+
   // FREE: ts->target_inputs
   // FREE: ts->target_outputs
-  size_t i;
   for (i = 0; i < ts->training_set_size; ++i)
   {
     free_and_null(ts->target_inputs[i]);

@@ -1,6 +1,6 @@
 CC = gcc
-#CFLAGS = -O0 -g -Wall -Wextra -pedantic -Werror -std=c99
-CFLAGS = -O2 -pipe -march=native --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2
+CFLAGS = -O0 -g -Wall -Wextra -pedantic -Werror -std=c99
+#CFLAGS = -O2 -pipe -march=native --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2
 #LDFLAGS = -lm -fopenmpa
 LDFLAGS = -lm
 

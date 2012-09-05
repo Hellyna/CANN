@@ -6,8 +6,10 @@
 struct training_set_t {
   size_t    training_set_size;
   size_t    input_size;
+  char**    input_entries_desc;
   double**  target_inputs;
   size_t    output_size;
+  char**    output_entries_desc;
   double**  target_outputs;
 };
 

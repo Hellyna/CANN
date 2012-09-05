@@ -30,3 +30,4 @@ validate_csv_data_entry_counts (const csv_data_t* const data)
 
   return temp;
 }
+

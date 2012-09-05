@@ -137,6 +137,8 @@ destruct_training(training_t*             training,
   }
   free_and_null(training->_deltas);
 
+  // FREE: training
+  free_and_null(training);
 }
 
 static inline void

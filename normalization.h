@@ -18,4 +18,5 @@ construct_normalization_data_from_csv_data (const csv_data_t* csv_data);
 void
 destruct_normalization_data_initialized_with_csv_data (normalization_data_t*  normalization_data,
                                                        const csv_data_t*      csv_data);
+
 #endif
