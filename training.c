@@ -12,6 +12,7 @@
 #endif
 
 #include "util/util.h"
+#include "validation.h"
 
 #include "training.h"
 
@@ -264,6 +265,7 @@ train_neural_network (const training_t*       training,
                       void* const             propagation_data,
                       const size_t            print_every_x_epoch)
 {
+  validate_matching_neural_network_and_training_set(nn, ts);
   double best_error = DBL_MAX;
   double current_error;
   size_t minor_improvement_cycles = 0;

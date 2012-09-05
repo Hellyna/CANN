@@ -9,7 +9,7 @@ validate_csv_io_data_line_count (const csv_data_t* const input_data,
   const size_t input_line_count = input_data->line_count;
   if (input_line_count != output_data->line_count)
   {
-    putserr_and_exit("Input and output data file entries are not equal.\n");
+    putserr_and_exit("The number of lines in the output file and the input file is not equal.\n");
   }
 
   return input_line_count;
@@ -29,5 +29,16 @@ validate_csv_data_entry_counts (const csv_data_t* const data)
   }
 
   return temp;
+}
+
+void
+validate_matching_neural_network_and_training_set (const neural_network_t*  const nn,
+                                                   const training_set_t*    const ts)
+{
+  if (nn->config[0] != ts->input_size)
+    putserr_and_exit("Number of input neurons must be equal to the number of inputs in training set.\n");
+
+  if (nn->config[nn->config_size - 1] != ts->output_size)
+    putserr_and_exit("Number of output neurons must be equal to the number of outputs in the training set.\n");
 }
 

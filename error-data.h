@@ -1,7 +1,7 @@
 #ifndef ERROR_DATA_H_8D1C1F7B_182C_4487_8CD9_9F053221AC6C
 #define ERROR_DATA_H_8D1C1F7B_182C_4487_8CD9_9F053221AC6C
 
-#include <stdlib.h>
+#include <stddef.h>
 
 enum error_calculation_t
 {
