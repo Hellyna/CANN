@@ -16,4 +16,7 @@ void
 validate_matching_neural_network_and_training_set (const neural_network_t*  const nn,
                                                    const training_set_t*    const ts);
 
+void
+validate_neural_network_weights_file (const neural_network_t* const nn,
+                                      const csv_data_t*       const data);
 #endif

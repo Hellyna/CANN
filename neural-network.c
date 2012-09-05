@@ -1,21 +1,24 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
 
 #include "util/util.h"
+#include "libcsv/csv.h"
+#include "validation.h"
 
 #include "neural-network.h"
 
 
 
 neural_network_t*
-construct_neural_network (const size_t* config,
-                          const size_t  config_size,
-                          const double  min_weight,
-                          const double  max_weight,
+construct_neural_network (const size_t* const config,
+                          const size_t        config_size,
+                          const double        min_weight,
+                          const double        max_weight,
 
-                          void          (*weight_initialization_function) (const neural_network_t*))
+                          void          (*weight_initialization_function) (const neural_network_t* const))
 {
   // MALLOC: nn
   neural_network_t* nn = malloc_exit_if_null(sizeof(neural_network_t));
@@ -81,7 +84,7 @@ destruct_neural_network (neural_network_t* nn)
 
 
 void
-initialize_nguyen_widrow_weights (const neural_network_t* nn)
+initialize_nguyen_widrow_weights (const neural_network_t* const nn)
 {
   initialize_uniform_weights(nn);
 
@@ -118,7 +121,7 @@ initialize_nguyen_widrow_weights (const neural_network_t* nn)
 
 
 void
-initialize_uniform_weights (const neural_network_t* nn)
+initialize_uniform_weights (const neural_network_t* const nn)
 {
   srand((unsigned)time(NULL));
 
@@ -135,4 +138,49 @@ initialize_uniform_weights (const neural_network_t* nn)
   }
 }
 
+void
+save_neural_network_weights (const neural_network_t*  const nn,
+                             const char*              const path)
+{
+  FILE* fp = fopen(path, "wb");
+  exit_if_null(fp);
+  size_t i, j, k;
+  char buffer[1024];
+  for (i = 0; i < nn->config_size - 1; ++i)
+  {
+    for (j = 0; j < nn->config[i]; ++j)
+    {
+      for (k = 0; k < nn->config[i + 1]; ++k)
+      {
+        sprintf(buffer, "%g", nn->weights[i][j][k]);
+        csv_fwrite(fp, buffer, strlen(buffer));
+        if (k < nn->config[i + 1] - 1)
+          fputc(',', fp);
+      }
+      fputc('\n', fp);
+    }
+  }
+  fclose(fp);
+}
 
+
+
+void
+load_neural_network_weights (const neural_network_t*  const nn,
+                             const char*              const path)
+{
+  csv_data_t* data = construct_csv_data(path);
+  validate_neural_network_weights_file(nn, data);
+  size_t i, j, k, csv_data_index = 0;
+  for (i = 0; i < nn->config_size - 1; ++i)
+  {
+    for (j = 0; j < nn->config[i]; ++j)
+    {
+      for (k = 0; k < nn->config[i + 1]; ++k)
+      {
+        nn->weights[i][j][k] = atof(data->data[csv_data_index + j][k]);
+      }
+    }
+    csv_data_index += nn->config[i];
+  }
+}

@@ -14,19 +14,19 @@
 		<Cursor position="388" topLine="0" />
 	</File>
 	<File name="libcsv\csv.c" open="0" top="0" tabpos="0">
-		<Cursor position="3517" topLine="0" />
+		<Cursor position="167" topLine="0" />
 	</File>
 	<File name="libcsv\csv.h" open="0" top="0" tabpos="5">
-		<Cursor position="238" topLine="2" />
+		<Cursor position="363" topLine="0" />
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="0">
-		<Cursor position="227" topLine="93" />
+	<File name="main.c" open="1" top="1" tabpos="1">
+		<Cursor position="3115" topLine="98" />
 	</File>
-	<File name="neural-network.c" open="0" top="0" tabpos="4">
-		<Cursor position="173" topLine="0" />
+	<File name="neural-network.c" open="1" top="0" tabpos="2">
+		<Cursor position="4299" topLine="163" />
 	</File>
-	<File name="neural-network.h" open="0" top="0" tabpos="2">
-		<Cursor position="922" topLine="0" />
+	<File name="neural-network.h" open="1" top="0" tabpos="3">
+		<Cursor position="1103" topLine="16" />
 	</File>
 	<File name="resilient-propagation.c" open="0" top="0" tabpos="2">
 		<Cursor position="399" topLine="0" />
@@ -35,10 +35,10 @@
 		<Cursor position="600" topLine="12" />
 	</File>
 	<File name="training-set.c" open="0" top="0" tabpos="0">
-		<Cursor position="655" topLine="3" />
+		<Cursor position="146" topLine="9" />
 	</File>
 	<File name="training-set.h" open="0" top="0" tabpos="4">
-		<Cursor position="222" topLine="0" />
+		<Cursor position="397" topLine="5" />
 	</File>
 	<File name="training.c" open="0" top="0" tabpos="3">
 		<Cursor position="4394" topLine="8" />
@@ -47,15 +47,15 @@
 		<Cursor position="867" topLine="21" />
 	</File>
 	<File name="util\util.c" open="0" top="0" tabpos="0">
-		<Cursor position="567" topLine="35" />
+		<Cursor position="864" topLine="54" />
 	</File>
 	<File name="util\util.h" open="0" top="0" tabpos="0">
 		<Cursor position="470" topLine="32" />
 	</File>
-	<File name="validation.c" open="0" top="0" tabpos="0">
-		<Cursor position="420" topLine="8" />
+	<File name="validation.c" open="1" top="0" tabpos="4">
+		<Cursor position="1579" topLine="50" />
 	</File>
 	<File name="validation.h" open="0" top="0" tabpos="0">
-		<Cursor position="134" topLine="0" />
+		<Cursor position="762" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

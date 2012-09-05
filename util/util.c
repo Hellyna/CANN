@@ -58,6 +58,7 @@ int
 putserr (const char* const str)
 {
   int retr = fputs(str, stderr);
+  fputc('\n', stderr);
   return retr;
 }
 
@@ -65,6 +66,7 @@ void
 putserr_and_exit (const char* const str)
 {
   fputs(str, stderr);
+  fputc('\n', stderr);
   exit(EXIT_FAILURE);
 }
 
@@ -73,6 +75,7 @@ putserr_and_exitno (const int         exit_value,
                     const char* const str)
 {
   fputs(str, stderr);
+  fputc('\n', stderr);
   exit(exit_value);
 }
 

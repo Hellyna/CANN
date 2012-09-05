@@ -109,8 +109,10 @@ main (int argc, char** argv)
   //training_set_t* ts = construct_training_set("in.csv", "out.csv");
   //normalize_training_set(ts);
   //debug_training_set(ts);
-  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 200000));
-
+  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
+  save_neural_network_weights(nn, "lol");
+  load_neural_network_weights(nn, "lol");
+  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
   destruct_training(training, nn);
   destruct_resilient_propagation_data(rprop_data, nn);
   destruct_training_set(ts);
