@@ -16,10 +16,10 @@
 	<File name="libcsv\csv.c" open="0" top="0" tabpos="0">
 		<Cursor position="3517" topLine="0" />
 	</File>
-	<File name="libcsv\csv.h" open="1" top="0" tabpos="5">
+	<File name="libcsv\csv.h" open="0" top="0" tabpos="5">
 		<Cursor position="238" topLine="2" />
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="1">
+	<File name="main.c" open="1" top="1" tabpos="0">
 		<Cursor position="227" topLine="93" />
 	</File>
 	<File name="neural-network.c" open="0" top="0" tabpos="4">
@@ -27,12 +27,6 @@
 	</File>
 	<File name="neural-network.h" open="0" top="0" tabpos="2">
 		<Cursor position="922" topLine="0" />
-	</File>
-	<File name="normalization.c" open="1" top="0" tabpos="2">
-		<Cursor position="554" topLine="6" />
-	</File>
-	<File name="normalization.h" open="1" top="0" tabpos="3">
-		<Cursor position="235" topLine="0" />
 	</File>
 	<File name="resilient-propagation.c" open="0" top="0" tabpos="2">
 		<Cursor position="399" topLine="0" />
@@ -43,7 +37,7 @@
 	<File name="training-set.c" open="0" top="0" tabpos="0">
 		<Cursor position="655" topLine="3" />
 	</File>
-	<File name="training-set.h" open="1" top="1" tabpos="4">
+	<File name="training-set.h" open="0" top="0" tabpos="4">
 		<Cursor position="222" topLine="0" />
 	</File>
 	<File name="training.c" open="0" top="0" tabpos="3">
@@ -51,12 +45,6 @@
 	</File>
 	<File name="training.h" open="0" top="0" tabpos="4">
 		<Cursor position="867" topLine="21" />
-	</File>
-	<File name="util\math.c" open="0" top="0" tabpos="0">
-		<Cursor position="296" topLine="0" />
-	</File>
-	<File name="util\math.h" open="0" top="0" tabpos="0">
-		<Cursor position="107" topLine="0" />
 	</File>
 	<File name="util\util.c" open="0" top="0" tabpos="0">
 		<Cursor position="567" topLine="35" />

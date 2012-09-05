@@ -60,10 +60,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="neural-network.h" />
-		<Unit filename="normalization.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="normalization.h" />
 		<Unit filename="resilient-propagation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -76,10 +72,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="training.h" />
-		<Unit filename="util\math.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="util\math.h" />
 		<Unit filename="util\util.c">
 			<Option compilerVar="CC" />
 		</Unit>
