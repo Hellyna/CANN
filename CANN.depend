@@ -4,7 +4,7 @@
 	"util/util.h"
 	"error-data.h"
 
-1346825755 f:\users\hellyna\desktop\cann\util\util.h
+1346912105 f:\users\hellyna\desktop\cann\util\util.h
 	<stddef.h>
 
 1346825755 f:\users\hellyna\desktop\cann\error-data.h
@@ -55,7 +55,7 @@
 
 1346538752 f:\users\hellyna\desktop\cann\activation-functions.h
 
-1346906442 source:f:\users\hellyna\desktop\cann\neural-network.c
+1346908352 source:f:\users\hellyna\desktop\cann\neural-network.c
 	<stdlib.h>
 	<stdio.h>
 	<string.h>
@@ -73,7 +73,7 @@
 1346563319 f:\users\hellyna\desktop\cann\gradient.h
 	"neural-network.h"
 
-1346906227 source:f:\users\hellyna\desktop\cann\main.c
+1346907902 source:f:\users\hellyna\desktop\cann\main.c
 	<stdlib.h>
 	<string.h>
 	<stdio.h>

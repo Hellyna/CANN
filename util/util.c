@@ -40,7 +40,7 @@ exit_if_null (const void* const p)
   if (p == NULL)
   {
     perror("Error");
-    exit(-1);
+    exit(EXIT_FAILURE);
   }
 }
 

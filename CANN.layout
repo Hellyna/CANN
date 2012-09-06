@@ -20,13 +20,13 @@
 		<Cursor position="363" topLine="0" />
 	</File>
 	<File name="main.c" open="1" top="0" tabpos="1">
-		<Cursor position="1832" topLine="96" />
+		<Cursor position="3032" topLine="102" />
 	</File>
 	<File name="neural-network.c" open="1" top="1" tabpos="2">
-		<Cursor position="5578" topLine="205" />
+		<Cursor position="4693" topLine="167" />
 	</File>
 	<File name="neural-network.h" open="1" top="0" tabpos="3">
-		<Cursor position="968" topLine="7" />
+		<Cursor position="968" topLine="25" />
 	</File>
 	<File name="resilient-propagation.c" open="0" top="0" tabpos="2">
 		<Cursor position="399" topLine="0" />
@@ -41,7 +41,7 @@
 		<Cursor position="397" topLine="5" />
 	</File>
 	<File name="training.c" open="0" top="0" tabpos="3">
-		<Cursor position="4394" topLine="8" />
+		<Cursor position="417" topLine="179" />
 	</File>
 	<File name="training.h" open="0" top="0" tabpos="4">
 		<Cursor position="867" topLine="21" />
