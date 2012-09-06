@@ -43,19 +43,18 @@ validate_matching_neural_network_and_training_set (const neural_network_t*  cons
 }
 
 void
-validate_neural_network_weights_file (const neural_network_t* const nn,
-                                      const csv_data_t*       const data)
+validate_neural_network_file (const neural_network_t* const nn,
+                              const csv_data_t*       const data)
 {
   size_t i;
   size_t  temp = data->entry_counts[0],
           num_consecutive_same_lines = 1,
-          num_same_line_blocks = 1,
-          neural_network_index = 0;
+          num_same_line_blocks = 1;
   for (i = 1; i < data->line_count; ++i)
   {
     if (temp != data->entry_counts[i])
     {
-      if (nn->config[neural_network_index] != num_consecutive_same_lines)
+      if (nn->config[num_same_line_blocks - 1] != num_consecutive_same_lines)
         putserr_and_exit("Malformed neural network weights file.");
 
       num_consecutive_same_lines = 1;
@@ -68,6 +67,13 @@ validate_neural_network_weights_file (const neural_network_t* const nn,
     }
     temp = data->entry_counts[i];
   }
+
+  if (nn->config[num_same_line_blocks - 1] != num_consecutive_same_lines)
+      putserr_and_exit("Malformed neural network weights file.");
+
   if (num_same_line_blocks != nn->config_size - 1)
+    putserr_and_exit("Malformed neural network weights file.");
+
+  if (nn->config[num_same_line_blocks] != temp)
     putserr_and_exit("Malformed neural network weights file.");
 }

@@ -19,14 +19,14 @@
 	<File name="libcsv\csv.h" open="0" top="0" tabpos="5">
 		<Cursor position="363" topLine="0" />
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="1">
-		<Cursor position="3115" topLine="98" />
+	<File name="main.c" open="1" top="0" tabpos="1">
+		<Cursor position="1832" topLine="96" />
 	</File>
-	<File name="neural-network.c" open="1" top="0" tabpos="2">
-		<Cursor position="4299" topLine="163" />
+	<File name="neural-network.c" open="1" top="1" tabpos="2">
+		<Cursor position="5578" topLine="205" />
 	</File>
 	<File name="neural-network.h" open="1" top="0" tabpos="3">
-		<Cursor position="1103" topLine="16" />
+		<Cursor position="968" topLine="7" />
 	</File>
 	<File name="resilient-propagation.c" open="0" top="0" tabpos="2">
 		<Cursor position="399" topLine="0" />
@@ -53,9 +53,9 @@
 		<Cursor position="470" topLine="32" />
 	</File>
 	<File name="validation.c" open="1" top="0" tabpos="4">
-		<Cursor position="1579" topLine="50" />
+		<Cursor position="1432" topLine="29" />
 	</File>
-	<File name="validation.h" open="0" top="0" tabpos="0">
-		<Cursor position="762" topLine="0" />
+	<File name="validation.h" open="1" top="0" tabpos="5">
+		<Cursor position="611" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

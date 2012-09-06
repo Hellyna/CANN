@@ -113,6 +113,9 @@ main (int argc, char** argv)
   save_neural_network_weights(nn, "lol");
   load_neural_network_weights(nn, "lol");
   printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
+  destruct_neural_network(nn);
+  nn = construct_neural_network_from_file("lol");
+  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
   destruct_training(training, nn);
   destruct_resilient_propagation_data(rprop_data, nn);
   destruct_training_set(ts);

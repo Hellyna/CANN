@@ -8,8 +8,6 @@ struct neural_network_t {
   size_t           config_size;
 
   double***        weights;
-  double           min_weight;
-  double           max_weight;
 };
 
 typedef struct neural_network_t neural_network_t;
@@ -20,16 +18,25 @@ construct_neural_network (const size_t* const config,
                           const double        min_weight,
                           const double        max_weight,
 
-                          void          (*weight_initialization_function) (const neural_network_t* const));
+                          void                (*weight_initialization_function) (const neural_network_t* const,
+                                                                                 const double,
+                                                                                 const double));
+
+neural_network_t*
+construct_neural_network_from_file (const char* const path);
 
 void
 destruct_neural_network (neural_network_t* nn);
 
 void
-initialize_nguyen_widrow_weights (const neural_network_t* const nn);
+initialize_nguyen_widrow_weights (const neural_network_t* const nn,
+                                  const double                  min_weight,
+                                  const double                  max_weight);
 
 void
-initialize_uniform_weights (const neural_network_t* const nn);
+initialize_uniform_weights (const neural_network_t* const nn,
+                            const double                  min_weight,
+                            const double                  max_weight);
 
 void
 save_neural_network_weights (const neural_network_t*  const nn,

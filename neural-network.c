@@ -10,15 +10,9 @@
 
 #include "neural-network.h"
 
-
-
 neural_network_t*
-construct_neural_network (const size_t* const config,
-                          const size_t        config_size,
-                          const double        min_weight,
-                          const double        max_weight,
-
-                          void          (*weight_initialization_function) (const neural_network_t* const))
+_construct_neural_network (const size_t* const config,
+                           const size_t        config_size)
 {
   // MALLOC: nn
   neural_network_t* nn = malloc_exit_if_null(sizeof(neural_network_t));
@@ -31,12 +25,6 @@ construct_neural_network (const size_t* const config,
 
   // INIT: nn->config
   memcpy(nn->config, config, sizeof(size_t) * config_size);
-
-  // INIT: nn->min_weight
-  nn->min_weight = min_weight;
-
-  // INIT: nn->max_weight
-  nn->max_weight = max_weight;
 
   size_t num_weight_layers = nn->config_size - 1;
   // MALLOC: nn->weights
@@ -52,8 +40,60 @@ construct_neural_network (const size_t* const config,
     }
   }
 
+  return nn;
+}
+
+
+neural_network_t*
+construct_neural_network (const size_t* const config,
+                          const size_t        config_size,
+                          const double        min_weight,
+                          const double        max_weight,
+
+                          void                (*weight_initialization_function) (const neural_network_t* const,
+                                                                                 const double,
+                                                                                 const double))
+{
+  neural_network_t* nn = _construct_neural_network(config, config_size);
   // INIT: nn->weights
-  (*weight_initialization_function) (nn);
+  (*weight_initialization_function) (nn, min_weight, max_weight);
+
+  return nn;
+}
+
+
+neural_network_t*
+construct_neural_network_from_file (const char* const path)
+{
+  csv_data_t* data = construct_csv_data(path);
+  size_t i;
+  size_t  temp = data->entry_counts[0],
+          num_consecutive_same_lines = 1,
+          num_same_line_blocks = 1,
+          config_size,
+          config[1024];
+  for (i = 1; i < data->line_count; ++i)
+  {
+    if (temp != data->entry_counts[i])
+    {
+      config[num_same_line_blocks - 1] = num_consecutive_same_lines;
+      num_consecutive_same_lines = 1;
+      ++num_same_line_blocks;
+    }
+    else
+    {
+      ++num_consecutive_same_lines;
+    }
+    temp = data->entry_counts[i];
+  }
+  config_size = num_same_line_blocks + 1;
+  config[num_same_line_blocks - 1] = num_consecutive_same_lines;
+  config[num_same_line_blocks] = temp;
+
+  destruct_csv_data(data);
+
+  neural_network_t* nn = _construct_neural_network(config, config_size);
+  load_neural_network_weights(nn, path);
 
   return nn;
 }
@@ -84,9 +124,11 @@ destruct_neural_network (neural_network_t* nn)
 
 
 void
-initialize_nguyen_widrow_weights (const neural_network_t* const nn)
+initialize_nguyen_widrow_weights (const neural_network_t* const nn,
+                                  const double                  min_weight,
+                                  const double                  max_weight)
 {
-  initialize_uniform_weights(nn);
+  initialize_uniform_weights(nn, min_weight, max_weight);
 
   size_t num_input = nn->config[0];
   size_t num_hidden = 0;
@@ -121,7 +163,9 @@ initialize_nguyen_widrow_weights (const neural_network_t* const nn)
 
 
 void
-initialize_uniform_weights (const neural_network_t* const nn)
+initialize_uniform_weights (const neural_network_t* const nn,
+                            const double                  min_weight,
+                            const double                  max_weight)
 {
   srand((unsigned)time(NULL));
 
@@ -132,7 +176,7 @@ initialize_uniform_weights (const neural_network_t* const nn)
     {
       for (k = 0; k < nn->config[i + 1]; ++k)
       {
-        nn->weights[i][j][k] = rand_double() * (nn->max_weight - nn->min_weight) + nn->min_weight ;
+        nn->weights[i][j][k] = rand_double() * (max_weight - min_weight) + min_weight ;
       }
     }
   }
@@ -170,7 +214,7 @@ load_neural_network_weights (const neural_network_t*  const nn,
                              const char*              const path)
 {
   csv_data_t* data = construct_csv_data(path);
-  validate_neural_network_weights_file(nn, data);
+  validate_neural_network_file(nn, data);
   size_t i, j, k, csv_data_index = 0;
   for (i = 0; i < nn->config_size - 1; ++i)
   {
@@ -183,4 +227,5 @@ load_neural_network_weights (const neural_network_t*  const nn,
     }
     csv_data_index += nn->config[i];
   }
+  destruct_csv_data(data);
 }
