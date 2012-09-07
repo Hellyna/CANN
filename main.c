@@ -100,24 +100,38 @@ main (int argc, char** argv)
 
   (void) argc;
   (void) argv;
-  //size_t config[] = {6,12,6};
-  size_t config[] = {2,4,1};
+  time_series_data_t* tsd = construct_time_series_data("libcsv/test.csv");
+  struct tm fromt;
+  struct tm tot;
+  memset(&fromt, 0, sizeof(struct tm));
+  memset(&tot, 0, sizeof(struct tm));
+  fromt.tm_year = 2010 - 1900;
+  fromt.tm_mon = 1 - 1;
+  fromt.tm_mday = 1;
+
+  tot.tm_year = 2010 - 1900;
+  tot.tm_mon = 3 - 1;
+  tot.tm_mday = 1;
+
+  generate_training_set_files_from_time_series_data (tsd, mktime(&fromt), mktime(&tot), 5, 2, "snp500.in", "snp500.out");
+  destruct_time_series_data(tsd);
+
+  size_t config[] = {30,35,12};
+  //size_t config[] = {2,4,1};
   neural_network_t* nn = construct_neural_network(config, 3, -2.0, 2.0, &initialize_nguyen_widrow_weights);
   training_t* training = construct_training(nn, &elliott_activation, &elliott_derivative, false);
   resilient_propagation_data_t* rprop_data = construct_resilient_propagation_data(nn);
-  training_set_t* ts = construct_training_set("xor.in", "xor.out");
-  //training_set_t* ts = construct_training_set("in.csv", "out.csv");
-  //normalize_training_set(ts);
+ // training_set_t* ts = construct_training_set("xor.in", "xor.out");
+  training_set_t* ts = construct_training_set("snp500.in", "snp500.out");
+  normalize_training_set(ts);
   //debug_training_set(ts);
   printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
- // save_neural_network_weights(nn, "lol");
+  save_neural_network_weights(nn, "snp500.weights");
  // load_neural_network_weights(nn, "lol");
 //  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
 //  destruct_neural_network(nn);
 //  nn = construct_neural_network_from_file("lol");
 //  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
-  time_series_data_t* tsd = construct_time_series_data("libcsv/test.csv");
-  destruct_time_series_data(tsd);
   destruct_training(training, nn);
   destruct_resilient_propagation_data(rprop_data, nn);
   destruct_training_set(ts);

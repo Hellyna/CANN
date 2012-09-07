@@ -196,6 +196,7 @@ save_neural_network_weights (const neural_network_t*  const nn,
     {
       for (k = 0; k < nn->config[i + 1]; ++k)
       {
+        memset(buffer, 0, sizeof(buffer));
         sprintf(buffer, "%g", nn->weights[i][j][k]);
         csv_fwrite(fp, buffer, strlen(buffer));
         if (k < nn->config[i + 1] - 1)

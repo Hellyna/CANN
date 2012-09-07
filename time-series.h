@@ -69,4 +69,26 @@ construct_time_series_data (const char* const path);
   */
 void
 destruct_time_series_data (time_series_data_t* const tsd);
+
+/*!
+  Generates input and output training set files from the current time_series_data_t instance.
+  \param tsd the time_series_data_t instance to be generated from.
+  \param from the \b time_t date to begin the training set from.
+  \param to the \b time_t date to end the training set from.
+  \param input_training_block_size the number of time_series_data_record_t instances to be used as target inputs
+         to the neural network.
+  \param output_training_block_size the number of time_series_data_record_t instances to be used as target outputs
+         for the neural network.
+  \param input_training_set_file_name the input training set file name to save to.
+  \param output_training_set_file_name the output training set file name to save to.
+  */
+void
+generate_training_set_files_from_time_series_data (const time_series_data_t* const tsd,
+                                                   const time_t                    from,
+                                                   const time_t                    to,
+                                                   const size_t                    input_training_block_size,
+                                                   const size_t                    output_training_block_size,
+                                                   const char*               const input_training_set_file_name,
+                                                   const char*               const output_training_set_file_name);
+
 #endif
