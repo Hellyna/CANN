@@ -69,7 +69,7 @@ validate_neural_network_file (const neural_network_t* const nn,
   }
 
   if (nn->config[num_same_line_blocks - 1] != num_consecutive_same_lines)
-      putserr_and_exit("Malformed neural network weights file.");
+    putserr_and_exit("Malformed neural network weights file.");
 
   if (num_same_line_blocks != nn->config_size - 1)
     putserr_and_exit("Malformed neural network weights file.");

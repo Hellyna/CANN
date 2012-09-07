@@ -65,7 +65,7 @@ construct_neural_network (const size_t* const config,
 neural_network_t*
 construct_neural_network_from_file (const char* const path)
 {
-  csv_data_t* data = construct_csv_data(path);
+  csv_data_t* const data = construct_csv_data(path);
   size_t i;
   size_t  temp = data->entry_counts[0],
           num_consecutive_same_lines = 1,
@@ -222,7 +222,7 @@ load_neural_network_weights (const neural_network_t*  const nn,
     {
       for (k = 0; k < nn->config[i + 1]; ++k)
       {
-        nn->weights[i][j][k] = atof(data->data[csv_data_index + j][k]);
+        nn->weights[i][j][k] = strtod(data->data[csv_data_index + j][k], NULL);
       }
     }
     csv_data_index += nn->config[i];

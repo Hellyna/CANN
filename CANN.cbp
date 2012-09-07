@@ -64,6 +64,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="resilient-propagation.h" />
+		<Unit filename="time-series.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="time-series.h" />
 		<Unit filename="training-set.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -9,7 +9,7 @@
 #include "training.h"
 #include "activation-functions.h"
 #include "resilient-propagation.h"
-
+#include "time-series.h"
 
 //static int verbose_flag;
 
@@ -116,6 +116,8 @@ main (int argc, char** argv)
 //  destruct_neural_network(nn);
 //  nn = construct_neural_network_from_file("lol");
 //  printf("Final error rate: %g\n", train_neural_network(training, nn, ts, &resilient_propagation_loop, rprop_data, 20000));
+  time_series_data_t* tsd = construct_time_series_data("libcsv/test.csv");
+  destruct_time_series_data(tsd);
   destruct_training(training, nn);
   destruct_resilient_propagation_data(rprop_data, nn);
   destruct_training_set(ts);

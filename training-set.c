@@ -39,13 +39,13 @@ construct_training_set (const char* const input_data_path,
     ts->target_inputs[i] = malloc_exit_if_null(ts->input_size * sizeof(double));
     for (j = 0; j < ts->input_size; ++j)
     {
-      ts->target_inputs[i][j] = atof(input_data->data[i + 1][j]);
+      ts->target_inputs[i][j] = strtod(input_data->data[i + 1][j], NULL);
     }
 
     ts->target_outputs[i] = malloc_exit_if_null(ts->output_size * sizeof(double));
     for (j = 0; j < ts->output_size; ++j)
     {
-      ts->target_outputs[i][j] = atof(output_data->data[i + 1][j]);
+      ts->target_outputs[i][j] = strtod(output_data->data[i + 1][j], NULL);
     }
   }
 
